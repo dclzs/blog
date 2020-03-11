@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author dl
  * @since 2020-03-10
  */
-@RestController
 public class BaseController {
 
 }

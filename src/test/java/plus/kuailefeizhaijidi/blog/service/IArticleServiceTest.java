@@ -12,6 +12,6 @@ class IArticleServiceTest extends BaseTest {
     @Test
     public void testSelectList(){
         List<Article> list = articleService.list();
-        logger.info(">>> list:{} <<<", list);
+        log.info(">>> list:{} <<<", list);
     }
 }

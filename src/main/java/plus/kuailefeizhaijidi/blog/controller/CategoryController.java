@@ -4,6 +4,7 @@ package plus.kuailefeizhaijidi.blog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.Category;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
@@ -19,10 +20,11 @@ import java.util.List;
  * @author dl
  * @since 2020-03-10
  */
+@RestController
 @RequestMapping("/category")
 public class CategoryController extends BaseController {
 
-    final ICategoryService categoryService;
+    private final ICategoryService categoryService;
 
     public CategoryController(ICategoryService categoryService) {
         this.categoryService = categoryService;

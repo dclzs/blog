@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2020-03-10
  */
 @SpringBootApplication
-@MapperScan("plus.kuailefeizhaijidi.blog.mapper")
 public class BlogApplication {
 
     public static void main(String[] args) {
