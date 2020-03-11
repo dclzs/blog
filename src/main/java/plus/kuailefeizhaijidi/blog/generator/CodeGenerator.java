@@ -30,7 +30,7 @@ public class CodeGenerator {
         gc.setOpen(false);
         gc.setActiveRecord(true);
         gc.setBaseResultMap(true);
-        // gc.setSwagger2(true); 实体属性 Swagger2 注解
+        gc.setSwagger2(true); // 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
         // 数据源配置

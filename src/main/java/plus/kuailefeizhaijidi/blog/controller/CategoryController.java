@@ -1,12 +1,13 @@
 package plus.kuailefeizhaijidi.blog.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.Category;
+import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.ICategoryService;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @author dl
  * @since 2020-03-10
  */
+@Api(tags = "文章分类相关接口")
 @RestController
 @RequestMapping("/category")
 public class CategoryController extends BaseController {
@@ -31,6 +33,7 @@ public class CategoryController extends BaseController {
     }
 
     @GetMapping
+    @ApiOperation("分类列表")
     public Result<List<Category>> categoryList(){
         return new Result<>(ResultEnum.SUCCESS, categoryService.list());
     }

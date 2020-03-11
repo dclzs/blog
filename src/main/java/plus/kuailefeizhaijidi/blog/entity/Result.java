@@ -1,6 +1,5 @@
 package plus.kuailefeizhaijidi.blog.entity;
 
-import plus.kuailefeizhaijidi.blog.entity.BaseEntity;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 
 /**

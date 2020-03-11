@@ -1,7 +1,7 @@
 package plus.kuailefeizhaijidi.blog.mapper;
 
-import plus.kuailefeizhaijidi.blog.entity.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import plus.kuailefeizhaijidi.blog.entity.Category;
 
 /**
  * <p>
