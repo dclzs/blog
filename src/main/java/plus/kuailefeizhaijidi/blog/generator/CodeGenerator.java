@@ -16,7 +16,7 @@ public class CodeGenerator {
 
     private static final String URL = "jdbc:mysql://47.101.169.28:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "";
 
     public static void main(String[] args) {
         // 代码生成器
