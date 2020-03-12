@@ -24,5 +24,5 @@ public interface IArticleService extends IService<Article> {
      * @param categoryId 分类ID
      * @return 分页对象
      */
-    IPage<Article> getArticlePage(Page<Article> page, Long categoryId);
+    IPage<Article> getArticlePage(IPage<Article> page, Long categoryId);
 }

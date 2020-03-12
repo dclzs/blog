@@ -22,6 +22,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param categoryId 分类ID
      * @return 当前页数据
      */
-    IPage<Article> selectArticlePage(Page<Article> page, @Param("categoryId") Long categoryId);
+    IPage<Article> selectArticlePage(IPage<Article> page, @Param("categoryId") Long categoryId);
 
 }

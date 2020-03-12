@@ -26,7 +26,7 @@
                 category_id = #{categoryId}
             </if>
         </where>
-        order by article_id desc
+        order by create_time desc
     </select>
 
 </mapper>

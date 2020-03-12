@@ -20,7 +20,7 @@ import plus.kuailefeizhaijidi.blog.service.IArticleService;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
 
     @Override
-    public IPage<Article> getArticlePage(Page<Article> page, Long categoryId) {
+    public IPage<Article> getArticlePage(IPage<Article> page, Long categoryId) {
         return baseMapper.selectArticlePage(page, categoryId);
     }
 
