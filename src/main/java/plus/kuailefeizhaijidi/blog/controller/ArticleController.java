@@ -69,7 +69,7 @@ public class ArticleController extends BaseController {
     @ApiOperation("文章ID查询")
     @ApiImplicitParam(name = "ids[]", value = "文章ID数组")
     @PostMapping
-    public Result<List<Article>> articleListByIds(@RequestParam("ids[]") List<Integer> ids){
+    public Result<List<Article>> articleListByIds(@RequestParam("ids[]") List<String> ids){
         return ids.size() > Constant.MAX_SIZE ?
          new Result<>(ResultEnum.SUCCESS, Collections.emptyList()):
          new Result<>(ResultEnum.SUCCESS, articleService.listByIds(ids));
