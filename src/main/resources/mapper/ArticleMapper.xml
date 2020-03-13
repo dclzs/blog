@@ -19,7 +19,12 @@
 
     <select id="selectArticlePage" resultMap="BaseResultMap">
         SELECT
-            *
+            article_id,
+            article_title,
+            article_desc,
+            article_author,
+            create_time,
+            update_time
         FROM article
         <where>
             <if test="categoryId!=null">
