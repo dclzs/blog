@@ -1,6 +1,6 @@
-package plus.kuailefeizhaijidi.blog.service;
-
-class ICategoryServiceTest extends BaseTest {
-
-
-}
+//package plus.kuailefeizhaijidi.blog.service;
+//
+//class ICategoryServiceTest extends BaseTest {
+//
+//
+//}

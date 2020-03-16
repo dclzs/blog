@@ -16,6 +16,8 @@ import plus.kuailefeizhaijidi.blog.service.IArticleService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -69,7 +71,8 @@ public class ArticleController extends BaseController {
     @ApiImplicitParam(name = "ids", value = "文章ID数组")
     @PostMapping
     public Result<List<Article>> articleListByIds(@RequestBody List<String> ids){
-        return new Result<>(ResultEnum.SUCCESS, ids.size() > Constant.MAX_SIZE || ids.isEmpty() ? Collections.emptyList() : articleService.listByIds(ids));
+        Map<Long, Article> articleMap = articleService.listByIds(ids).stream().collect(Collectors.toMap(Article::getArticleId, t -> t));
+        return new Result<>(ResultEnum.SUCCESS, ids.size() > Constant.MAX_SIZE || ids.isEmpty() ? Collections.emptyList() : ids.stream().map(id -> articleMap.get(Long.parseLong(id))).collect(Collectors.toList()));
     }
 
 }
