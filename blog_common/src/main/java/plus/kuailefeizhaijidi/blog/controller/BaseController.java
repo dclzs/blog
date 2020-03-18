@@ -68,4 +68,8 @@ public class BaseController {
         return Collections.emptyMap();
     }
 
+    protected Map<String,Object> newHashMap(Object object){
+        return JSON.parseObject(JSON.toJSONString(object));
+    }
+
 }

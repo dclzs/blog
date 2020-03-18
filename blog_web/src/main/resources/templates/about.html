@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Clean Blog - Start Bootstrap Theme</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.min.css" th:href="@{css/clean-blog.min.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <div th:replace="frame :: nav"></div>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/about-bg.jpg')" th:style="'background:url(' + ${#servletContext.contextPath} + '/img/about-bg.jpg' + ');'">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>关 于 我 们</h1>
+            <span class="subheading">
+              <p>此肥宅非彼肥宅，我们不肥，但是我们很宅</p>
+              <p>我们的宅是技术宅，我们的肥是胆子肥</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2>建立肥宅基地的意义是什么？</h2>
+        <p>1.记录我们的学习笔记，打造专属与我们自己知识库</p>
+        <p>2.下班没有女盆友陪，只能写写代码，练练手了</p>
+        <h2>我们能一起玩嘛？</h2>
+        <p>当然可以，我们一直在寻找志同道合的小伙伴。我们在不断的完善肥宅基地。欢迎加入我们；qq群: 716886601</p>
+        <h2>可以介绍一下肥宅基地吗？？</h2>
+        <p>肥宅基地分为app端、web端，这是一个前端后分离的项目。后端采用springboot提供接口。app端采用uniapp开发。</p>
+        <h2>项目地址</h2>
+        <p><b> app端：</b> <a href="https://github.com/FugitiveLc/klfz-uniapp">https://github.com/FugitiveLc/klfz-uniapp</a></p>
+        <p><b> web端：</b> <a href="https://github.com/FugitiveLc/fljd-web">https://github.com/FugitiveLc/fljd-web</a></p>
+        <p><b>后台接口：</b> <a href="https://github.com/zsdclzs/blog">https://github.com/zsdclzs/blog</a></p>
+        <p><b>个人中心：</b> <a href="https://github.com/zsdclzs/blog">https://github.com/zsdclzs/blog</a></p>
+        <p><b>后台管理系统：</b> <a href="https://github.com/zsdclzs/blog">https://github.com/zsdclzs/blog</a></p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <div th:replace="frame :: footer"></div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js" th:src="@{vendor/jquery/jquery.min.js}"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js" th:src="@{js/clean-blog.min.js}"></script>
+
+</body>
+
+</html>
