@@ -29,7 +29,7 @@
   <div th:replace="frame :: nav"></div>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/home-bg.jpg')" th:style="'background:url(' + ${#servletContext.contextPath} + '/img/home-bg.jpg' + ');'">
+  <header class="masthead" style="background-image: url('img/home-bg.jpg')" th:style="'background:url(' + @{/img/home-bg.jpg} + ');'">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview" th:each="record : ${records}">
-          <a href="post.html" th:href="'article/'+${record.articleId}">
+          <a href="post.html" th:href="@{/article/}+${record.articleId}">
             <h2 class="post-title" th:text="${record.articleTitle}">
               Man must explore, and this is exploration at its greatest
             </h2>
@@ -63,7 +63,18 @@
         </div>
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#" th:href="@{${#httpServletRequest.requestURL}(current=${current + 1})}">Older Posts &rarr;</a>
+          <a class="btn btn-primary float-left" href="#" th:href="@{/article(current=${current - 1})}">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            上 一 页
+          </a>
+          <a class="btn btn-primary float-right" href="#" th:href="@{/article(current=${current + 1})}">
+            下 一 页
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </span>
+          </a>
         </div>
       </div>
     </div>

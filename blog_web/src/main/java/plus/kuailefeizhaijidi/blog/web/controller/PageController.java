@@ -41,6 +41,11 @@ public class PageController extends BaseController {
         return new ModelAndView("category", newHashMap("records", getData(result)));
     }
 
+    @GetMapping({"/","/index"})
+    public String index(){
+        return "redirect:/article";
+    }
+
     @GetMapping("article")
     public ModelAndView index(@RequestParam(value = "current", defaultValue = "1") Integer current,
                               @RequestParam(value = "size", defaultValue = "10") Integer size){
