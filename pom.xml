@@ -4,9 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>blog_common</module>
-        <module>blog_base</module>
+        <module>blog_article</module>
         <module>blog_mobile</module>
         <module>blog_web</module>
+        <module>blog_user</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -32,26 +33,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.25</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-swagger2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger-ui.version}</version>
         </dependency>
 
         <dependency>

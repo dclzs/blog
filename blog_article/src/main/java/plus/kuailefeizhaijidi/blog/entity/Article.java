@@ -1,5 +1,11 @@
 package plus.kuailefeizhaijidi.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
 /**
@@ -10,63 +16,57 @@ import java.time.LocalDateTime;
  * @author dl
  * @since 2020-03-10
  */
+@TableName("article")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(value="Article对象", description="文章表")
 public class Article extends BaseEntity<Article> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 文章ID
-     */
+    @ApiModelProperty(value = "文章ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @TableId(value = "article_id", type = IdType.ASSIGN_ID)
     private Long articleId;
 
-    /**
-     * 分类ID
-     */
+    @ApiModelProperty(value = "分类ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @TableField(value = "category_id")
     private Long categoryId;
 
-    /**
-     * 用户ID
-     */
+    @ApiModelProperty(value = "用户ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @TableField(value = "user_id")
     private Long userId;
 
-    /**
-     * 标签（逗号分隔）
-     */
+    @ApiModelProperty(value = "标签（逗号分隔）")
     private String tags;
 
-    /**
-     * 文章标题
-     */
+    @ApiModelProperty(value = "文章标题")
+    @TableField(value = "article_title")
     private String articleTitle;
 
-    /**
-     * 原作者
-     */
+    @ApiModelProperty(value = "原作者")
+    @TableField(value = "article_author")
     private String articleAuthor;
 
-    /**
-     * 文章描述
-     */
+    @ApiModelProperty(value = "文章描述")
+    @TableField(value = "article_desc")
     private String articleDesc;
 
-    /**
-     * 文章内容
-     */
+    @ApiModelProperty(value = "文章内容")
+    @TableField(value = "article_content")
     private String articleContent;
 
-    /**
-     * 公开状态
-     */
+    @ApiModelProperty(value = "公开状态")
+    @TableField(value = "public_status", fill = FieldFill.INSERT)
     private Integer publicStatus;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @ApiModelProperty(value = "更新时间")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
 

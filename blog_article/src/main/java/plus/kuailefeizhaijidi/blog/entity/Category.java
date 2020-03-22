@@ -1,5 +1,11 @@
 package plus.kuailefeizhaijidi.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
 /**
@@ -10,43 +16,41 @@ import java.time.LocalDateTime;
  * @author dl
  * @since 2020-03-10
  */
+@TableName("category")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(value="Category对象", description="分类表")
 public class Category extends BaseEntity<Category> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 分类ID
-     */
+    @ApiModelProperty(value = "分类ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @TableId(value = "category_id", type = IdType.ASSIGN_ID)
     private Long categoryId;
 
-    /**
-     * 用户ID
-     */
+    @ApiModelProperty(value = "用户ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @TableField(value = "user_id")
     private Long userId;
 
-    /**
-     * 分类名称
-     */
+    @ApiModelProperty(value = "分类名称")
+    @TableField(value = "category_name")
     private String categoryName;
 
-    /**
-     * 分类描述
-     */
+    @ApiModelProperty(value = "分类描述")
+    @TableField(value = "category_desc")
     private String categoryDesc;
 
-    /**
-     * 显示状态
-     */
+    @ApiModelProperty(value = "显示状态")
+    @TableField(value = "display_status", fill = FieldFill.INSERT)
     private Integer displayStatus;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @ApiModelProperty(value = "更新时间")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
 

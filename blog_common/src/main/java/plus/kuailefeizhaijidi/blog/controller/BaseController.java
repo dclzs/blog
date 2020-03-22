@@ -20,7 +20,7 @@ public class BaseController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    protected String host = "http://127.0.0.1:8080/base";
+    protected String host = "http://127.0.0.1:8080";
     protected final MediaType APPLICATION_FORM_URLENCODED = MediaType.APPLICATION_FORM_URLENCODED;
     protected final MediaType MULTIPART_FORM_DATA =  MediaType.MULTIPART_FORM_DATA;
 

@@ -18,9 +18,19 @@ public class Result<T> extends BaseEntity {
 
     private int code;
     private String msg;
+    private String token;
     private T data;
 
     public Result() {
+    }
+
+    public Result(String token) {
+        this.token = token;
+    }
+
+    public Result(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     public Result(int code, String msg, T data) {
@@ -29,12 +39,53 @@ public class Result<T> extends BaseEntity {
         this.data = data;
     }
 
+    public Result(int code, String msg, String token) {
+        this.code = code;
+        this.msg = msg;
+        this.token = token;
+    }
+
+    public Result(int code, String msg, String token, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.token = token;
+        this.data = data;
+    }
+
     public Result(ResultEnum resultEnum, T data) {
         this(resultEnum.getCode(), resultEnum.getMsg(), data);
     }
 
+    public Result(ResultEnum resultEnum, String token, T data) {
+        this(resultEnum.getCode(), resultEnum.getMsg(), token, data);
+    }
+
     public Result(ResultEnum resultEnum) {
-        this(resultEnum,null);
+        this(resultEnum.getCode(), resultEnum.getMsg());
+    }
+
+    public Result(ResultEnum resultEnum,String token) {
+        this(resultEnum.getCode(), resultEnum.getMsg(), token);
+    }
+
+    public static <T> Result<T> success(String token, T t) {
+        return new Result<>(ResultEnum.SUCCESS, token, t);
+    }
+
+    public static <T> Result<T> success(T t){
+        return new Result(ResultEnum.SUCCESS, t);
+    }
+
+    public static <T> Result<T> success(){
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+    public static <T> Result<T> fault(){
+        return new Result<>(ResultEnum.FAULT);
+    }
+
+    public static <T> Result<T> custom(ResultEnum resultEnum){
+        return new Result<>(resultEnum);
     }
 
     public int getCode() {
@@ -53,6 +104,14 @@ public class Result<T> extends BaseEntity {
         this.msg = msg;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public T getData() {
         return data;
     }
@@ -67,6 +126,7 @@ public class Result<T> extends BaseEntity {
         return "Result{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
+                ", token='" + token + '\'' +
                 ", data=" + data +
                 '}';
     }

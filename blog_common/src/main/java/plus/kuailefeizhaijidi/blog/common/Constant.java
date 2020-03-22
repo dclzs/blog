@@ -11,4 +11,6 @@ public final class Constant {
     public static final int DISABLE = 0;
 
     public static final int MAX_SIZE = 20;
+
+    public static final String ROLE_USER = "user";
 }
