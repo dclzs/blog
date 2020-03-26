@@ -10,7 +10,6 @@ import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IUserService;
 import plus.kuailefeizhaijidi.blog.util.JwtUtil;
 
@@ -30,9 +29,9 @@ import javax.validation.Valid;
 public class UserController extends BaseController {
 
 
-    final IUserService userService;
+    private final IUserService userService;
 
-    final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     public UserController(IUserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
@@ -47,7 +46,7 @@ public class UserController extends BaseController {
             String token = jwtUtil.createJWT(String.valueOf(login.getUserId()), login.getNickName(), Constant.ROLE_USER);
             return Result.success(token, login);
         }
-        return new Result<>(ResultEnum.FAULT);
+        return Result.fault();
     }
 
 }

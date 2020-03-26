@@ -20,7 +20,7 @@ import plus.kuailefeizhaijidi.blog.service.IUserService;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-    final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
     public UserServiceImpl(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
@@ -28,21 +28,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User add(User user){
-        String password = encoder.encode(user.getPassword());
-        user.setPassword(password);
-        if(save(user)){
-            return getById(user.getUserId());
+        if(getByEmail(user.getEmail()) == null){
+            String password = encoder.encode(user.getPassword());
+            user.setPassword(password);
+            if(save(user)){
+                return getById(user.getUserId());
+            }
         }
         return null;
     }
 
     @Override
     public User login(LoginParam loginParam) {
-        User user = getOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, loginParam.getEmail()));
+        User user = getByEmail(loginParam.getEmail());
         if (user != null && encoder.matches(loginParam.getPassword(), user.getPassword())) {
+            user.setPassword(null);
             return user;
         }
         return null;
+    }
+
+    private User getByEmail(String email){
+        return getOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, email));
     }
 
 }

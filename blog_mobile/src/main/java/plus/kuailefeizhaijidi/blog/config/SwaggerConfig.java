@@ -29,7 +29,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("plus.kuailefeizhaijidi.blog.mobile.controller"))
+                .apis(RequestHandlerSelectors.basePackage("plus.kuailefeizhaijidi.blog.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("快乐肥宅基地")

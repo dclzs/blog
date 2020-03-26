@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2020年03月21日
  */
 @Component
-public class JwtFilter extends HandlerInterceptorAdapter {
+public class MyJwtFilter extends HandlerInterceptorAdapter {
 
     Logger log = LoggerFactory.getLogger(getClass());
 
     private final JwtUtil jwtUtil;
 
-    public JwtFilter(JwtUtil jwtUtil) {
+    public MyJwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 

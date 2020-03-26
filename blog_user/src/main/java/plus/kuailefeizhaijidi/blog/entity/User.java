@@ -1,9 +1,11 @@
 package plus.kuailefeizhaijidi.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -17,12 +19,13 @@ import java.time.LocalDateTime;
  * @author dl
  * @since 2020-03-21
  */
-@TableName("user")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value="User对象", description="用户表")
 public class User extends BaseEntity<User> {
 
     private static final long serialVersionUID=1L;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @TableId(value = "user_id",type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "用户ID")
     private Long userId;
@@ -43,17 +46,19 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @TableField("user_desc")
     @ApiModelProperty(value = "描述")
     private String userDesc;
 
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "状态")
     private Integer status;
 
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 
