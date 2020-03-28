@@ -17,21 +17,4 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
-    <select id="selectArticlePage" resultMap="BaseResultMap">
-        SELECT
-            article_id,
-            article_title,
-            article_desc,
-            article_author,
-            create_time,
-            update_time
-        FROM article
-        <where>
-            <if test="categoryId!=null">
-                category_id = #{categoryId}
-            </if>
-        </where>
-        order by create_time desc
-    </select>
-
 </mapper>

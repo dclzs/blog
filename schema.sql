@@ -45,7 +45,7 @@ CREATE TABLE user(
 
 DROP TABLE IF EXISTS bookmark;
 CREATE TABLE bookmark(
-    `bookmark_id` BIGINT(20) COMMENT '文章ID',
+    `bookmark_id` BIGINT(20) COMMENT '书签ID',
     `article_id` BIGINT(20) COMMENT '文章ID',
     `user_id` BIGINT(20) COMMENT '用户ID',
     `create_time` DATETIME DEFAULT  NOW() COMMENT '创建时间',

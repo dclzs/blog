@@ -14,13 +14,13 @@ import javax.validation.constraints.Size;
 @ApiModel("登录参数")
 public class LoginParam {
 
-    @NotNull(message = "邮箱不能为空！")
-    @Email(message = "请输入正确的邮箱！")
+    @NotNull
+    @Email
     @ApiModelProperty("邮箱")
     private String email;
 
-    @Size(min = 6, message = "请输入正确的密码！")
-    @NotNull(message = "密码不能为空！")
+    @Size(min = 6)
+    @NotNull
     @ApiModelProperty("密码")
     private String password;
 

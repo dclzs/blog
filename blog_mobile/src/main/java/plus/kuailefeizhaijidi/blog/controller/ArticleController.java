@@ -5,6 +5,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import plus.kuailefeizhaijidi.blog.common.Constant;
@@ -72,7 +77,12 @@ public class ArticleController extends BaseController {
         if(ids.size() > Constant.MAX_SIZE || ids.isEmpty()) {
             return new Result<>(ResultEnum.SUCCESS, Collections.emptyList());
         }
-        Result result = restTemplate.postForObject(getRequestUrl(), ids, Result.class);
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
+        map.addAll("ids", ids);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        Result result = restTemplate.postForObject(getRequestUrl(), request, Result.class);
         return new Result<>(ResultEnum.SUCCESS, getData(result));
     }
 

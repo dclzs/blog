@@ -1,5 +1,7 @@
 package plus.kuailefeizhaijidi.blog.enums;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * <p>
  * 数据响应枚举
@@ -12,11 +14,16 @@ public enum ResultEnum implements BaseEnum{
     /**
      * 请求成功
      */
-    SUCCESS(200,"SUCCESS"),
+    SUCCESS(HttpStatus.OK.value(),"SUCCESS"),
     /**
      * 请求失败
      */
-    FAULT(500,"FAULT");
+    FAULT(HttpStatus.INTERNAL_SERVER_ERROR.value(),"FAULT"),
+    /**
+     * 参数错误
+     */
+    PARAM_ERROR(HttpStatus.BAD_REQUEST.value(), "PARAM ERROR"),
+    ;
 
     ResultEnum(int code, String msg) {
         this.code = code;

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -33,6 +34,7 @@ public class Category extends BaseEntity<Category> {
     @TableField(value = "user_id")
     private Long userId;
 
+    @NotNull
     @ApiModelProperty(value = "分类名称")
     @TableField(value = "category_name")
     private String categoryName;

@@ -24,7 +24,11 @@ public class RequestUtils {
         return getRequestAttributes().getResponse();
     }
 
-    public static String getRequestURI(){
+    public static String getRequestUri(){
         return getRequest().getRequestURI();
+    }
+
+    public static String getHeader(String name){
+        return getRequest().getHeader(name);
     }
 }

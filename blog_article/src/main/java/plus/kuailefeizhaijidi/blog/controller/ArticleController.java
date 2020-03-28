@@ -1,7 +1,9 @@
 package plus.kuailefeizhaijidi.blog.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
  * @author dl
  * @since 2020-03-10
  */
-@Api(tags = "文章相关接口")
+@Api(tags = "文章接口")
 @RestController
 @RequestMapping("/article")
 public class ArticleController extends BaseController {
@@ -42,7 +44,7 @@ public class ArticleController extends BaseController {
     @ApiImplicitParam(name = "articleId", value = "文章ID", required = true)
     @GetMapping("{articleId}")
     public Result<Article> articleByArticleId(@PathVariable("articleId") Long articleId) {
-        return new Result<>(ResultEnum.SUCCESS, articleService.getById(articleId));
+        return new Result<>(ResultEnum.SUCCESS, articleService.getOne(select().eq(Article::getArticleId,articleId)));
     }
 
     @ApiOperation("根据文章分类ID查询")
@@ -54,7 +56,7 @@ public class ArticleController extends BaseController {
     public Result<IPage<Article>> articleListByCategoryId(@PathVariable("categoryId") Long categoryId,
                                                           @RequestParam(value = "current", defaultValue = "1") Integer current,
                                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return new Result<>(ResultEnum.SUCCESS, articleService.getArticlePage(new Page<>(current, size), categoryId));
+        return Result.success(articleService.page(new Page<>(current, size), list().eq(Article::getCategoryId, categoryId)));
     }
 
     @ApiOperation("文章分页查询")
@@ -64,16 +66,35 @@ public class ArticleController extends BaseController {
     @GetMapping
     public Result<IPage<Article>> articleListByCategoryId(@RequestParam(value = "current", defaultValue = "1") Integer current,
                                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return new Result<>(ResultEnum.SUCCESS, articleService.getArticlePage(new Page<>(current, size), null));
+        return Result.success(articleService.page(new Page<>(current, size), list()));
     }
 
     @ApiOperation("文章ID查询")
     @ApiImplicitParam(name = "ids", value = "文章ID数组")
     @PostMapping
-    public Result<List<Article>> articleListByIds(@RequestBody List<String> ids){
-        Map<Long, Article> articleMap = articleService.listByIds(ids).stream().collect(Collectors.toMap(Article::getArticleId, t -> t));
-        return new Result<>(ResultEnum.SUCCESS, ids.size() > Constant.MAX_SIZE || ids.isEmpty() ? Collections.emptyList() : ids.stream().map(id -> articleMap.get(Long.parseLong(id))).collect(Collectors.toList()));
+    public Result<List<Article>> articleListByIds(@RequestParam("ids") List<String> ids) {
+        if (ids.size() > Constant.MAX_SIZE || ids.isEmpty()) {
+            return Result.success(Collections.emptyList());
+        }
+        Map<Long, Article> articleMap = articleService.list(list().in(Article::getArticleId, ids)).stream().collect(Collectors.toMap(Article::getArticleId, t -> t));
+        return Result.success(ids.stream().map(id -> articleMap.get(Long.parseLong(id))).collect(Collectors.toList()));
     }
 
+    private LambdaQueryWrapper<Article> list(){
+        return Wrappers.<Article>lambdaQuery()
+                .select(Article::getArticleId,
+                        Article::getArticleTitle,
+                        Article::getArticleDesc,
+                        Article::getArticleAuthor,
+                        Article::getCreateTime,
+                        Article::getUpdateTime)
+                .eq(Article::getPublicStatus, Constant.ENABLE);
+    }
+
+
+    private LambdaQueryWrapper<Article> select(){
+        return Wrappers.<Article>lambdaQuery()
+                .eq(Article::getPublicStatus, Constant.ENABLE);
+    }
 }
 

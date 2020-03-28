@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         User login = userService.login(loginParam);
         if (login != null) {
             String token = jwtUtil.createJWT(String.valueOf(login.getUserId()), login.getNickName(), Constant.ROLE_USER);
-            return Result.success(token, login);
+            return Result.success(Constant.BEARER_ + token, login);
         }
         return Result.fault();
     }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -21,12 +22,14 @@ public class Bookmark extends BaseEntity<Bookmark> {
     private static final long serialVersionUID=1L;
 
     @TableId(value = "bookmark_id",type = IdType.ASSIGN_ID)
-    @ApiModelProperty(value = "文章ID")
+    @ApiModelProperty(value = "书签ID")
     private Long bookmarkId;
 
+    @NotNull
     @ApiModelProperty(value = "文章ID")
     private Long articleId;
 
+    @NotNull
     @ApiModelProperty(value = "用户ID")
     private Long userId;
 
