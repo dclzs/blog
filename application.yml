@@ -2,7 +2,7 @@ spring:                                                         # 表示该配�
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource                # 配置当前要使用的数据源的操作类型那个
     driver-class-name: com.mysql.cj.jdbc.Driver      # 配置MySQL的驱动程序类
-    url: jdbc:mysql://47.101.169.28:3307/blog?useUnicode=true&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://47.101.169.28:3307/blog?characterEncoding=utf8
     username: root
     password: ao-mysql
     filters: stat,wall,log4j                                    # druid监控配置
