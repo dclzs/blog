@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plus.kuailefeizhaijidi.blog.common.Constant;
+import plus.kuailefeizhaijidi.blog.common.MsgConstant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.exception.AuthorizeException;
 import plus.kuailefeizhaijidi.blog.util.JwtUtil;
@@ -97,22 +98,22 @@ public class BaseController {
     }
 
     protected Claims getClaims() throws AuthorizeException{
-        String authorization = RequestUtils.getHeader("Authorization");
+        String authorization = RequestUtils.getHeader(Constant.AUTHORIZATION);
         if (authorization == null || !authorization.startsWith(Constant.BEARER_)) {
-            throw new AuthorizeException("肥宅才能访问");
+            throw new AuthorizeException(MsgConstant.NOT_LOGIN);
         }
         String token = authorization.replace(Constant.BEARER_, "");
         try {
             return jwtUtil.parseJWT(token);
         } catch (ExpiredJwtException e) {
             log.error("==> authorize => ExpiredJwtException: {}", e.getMessage());
-            throw new AuthorizeException("登录过期，请重新登录");
+            throw new AuthorizeException(MsgConstant.LOGIN_EXPIRED);
         } catch (SignatureException e){
             log.error("==> authorize => SignatureException: {}", e.getMessage());
-            throw new AuthorizeException("无效的 token");
+            throw new AuthorizeException(MsgConstant.INVALID_TOKEN);
         }catch (Exception e) {
             log.error("==> authorize: {}", e.getMessage());
-            throw new AuthorizeException("访问失败");
+            throw new AuthorizeException(MsgConstant.FAULT);
         }
     }
 }

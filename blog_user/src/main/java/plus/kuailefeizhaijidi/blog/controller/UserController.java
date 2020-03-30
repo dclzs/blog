@@ -10,6 +10,7 @@ import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
+import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IUserService;
 import plus.kuailefeizhaijidi.blog.util.JwtUtil;
 
@@ -46,7 +47,7 @@ public class UserController extends BaseController {
             String token = jwtUtil.createJWT(String.valueOf(login.getUserId()), login.getNickName(), Constant.ROLE_USER);
             return Result.success(Constant.BEARER_ + token, login);
         }
-        return Result.fault();
+        return Result.custom(ResultEnum.ACC_PWD_ERROR);
     }
 
 }

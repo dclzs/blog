@@ -1,0 +1,9 @@
+.up_btn {
+    position: fixed;
+    bottom: 180px;
+    right: 120px;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+    color: #666;
+}

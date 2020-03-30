@@ -47,8 +47,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
+        <!--/*@thymesVar id="records" type="List"*/-->
+        <!--/*@thymesVar id="record" type="plus.kuailefeizhaijidi.blog.entity.Category"*/-->
         <div class="post-preview" th:each="record : ${records}">
-          <a href="post.html" th:href="'article/'+${record.categoryId}+'/category?categoryName='+${record.categoryName}">
+          <a href="post.html" th:href="'article/'+${record.categoryId}+'/category'">
             <h2 class="lead" th:text="${record.categoryName}" th:title="${record.categoryDesc}">
               Man must explore, and this is exploration at its greatest
             </h2>
