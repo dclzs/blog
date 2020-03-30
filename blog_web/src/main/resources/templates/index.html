@@ -20,6 +20,7 @@
 
   <!-- Custom styles for this template -->
   <link href="css/clean-blog.min.css" th:href="@{/css/clean-blog.min.css}" rel="stylesheet">
+  <link href="css/my.css" th:href="@{/css/my.css}" rel="stylesheet">
 
 </head>
 
@@ -47,8 +48,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
+        <!--/*@thymesVar id="records" type="List"*/-->
+        <!--/*@thymesVar id="record" type="plus.kuailefeizhaijidi.blog.entity.Article"*/-->
         <div class="post-preview" th:each="record : ${records}">
-          <a href="post.html" th:href="@{/article/}+${record.articleId}">
+          <a href="post.html" th:href="@{/article/} + ${record.articleId}">
             <h2 class="post-title" th:text="${record.articleTitle}">
               Man must explore, and this is exploration at its greatest
             </h2>
@@ -62,20 +65,20 @@
           <hr>
         </div>
         <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-left" href="#" th:href="@{/article(current=${current - 1})}" th:if="${current > 1}">
+          <div class="clearfix">
+              <a class="btn btn-primary float-left" href="#" th:href="(${index} ? @{/article(current=${current - 1})} : @{category(current=${current - 1})})" th:if="${current > 1}">
             <span class="fa-stack fa-lg">
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </span>
-            上 一 页
-          </a>
-          <a class="btn btn-primary float-right" href="#" th:href="@{/article(current=${current + 1})}">
-            下 一 页
-            <span class="fa-stack fa-lg">
+                  上 一 页
+              </a>
+              <a class="btn btn-primary float-right" href="#" th:href="(${index} ? @{/article(current=${current + 1})} : @{category(current=${current + 1})})">
+                  下 一 页
+                  <span class="fa-stack fa-lg">
               <i class="fa fa-arrow-right" aria-hidden="true"></i>
             </span>
-          </a>
-        </div>
+              </a>
+          </div>
       </div>
     </div>
   </div>
@@ -85,24 +88,17 @@
   <!-- Footer -->
   <div th:replace="frame :: footer"></div>
 
+  <span id="up_btn" class="up_btn">
+		<i class="fa fa-arrow-up" title="回到顶部"></i>
+  </span>
+
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js" th:src="@{/js/clean-blog.min.js}"></script>
-  <script type="text/javascript" th:src="@{/js/jquery.goup.min.js}"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $.goup({
-        trigger: 100,
-        bottomOffset: 150,
-        locationOffset: 100,
-        title: '',
-        titleAsText: true
-      });
-    });
-  </script>
+  <script src="js/my.js" th:src="@{/js/my.js}"></script>
 
 </body>
 

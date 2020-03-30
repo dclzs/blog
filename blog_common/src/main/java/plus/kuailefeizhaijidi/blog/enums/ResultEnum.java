@@ -1,5 +1,8 @@
 package plus.kuailefeizhaijidi.blog.enums;
 
+import plus.kuailefeizhaijidi.blog.common.CodeConstant;
+import plus.kuailefeizhaijidi.blog.common.MsgConstant;
+
 /**
  * <p>
  * 数据响应枚举
@@ -12,11 +15,24 @@ public enum ResultEnum implements BaseEnum{
     /**
      * 请求成功
      */
-    SUCCESS(200,"SUCCESS"),
+    SUCCESS(CodeConstant.OK, MsgConstant.OK),
     /**
      * 请求失败
      */
-    FAULT(500,"FAULT");
+    FAULT(CodeConstant.FAULT,MsgConstant.FAULT),
+    /**
+     * 参数错误
+     */
+    PARAM_ERROR(CodeConstant.PARAM_ERROR, MsgConstant.PARAM_ERROR),
+    /**
+     * 账号或密码错误
+     */
+    ACC_PWD_ERROR(CodeConstant.PARAM_ERROR, MsgConstant.ACC_PWD_ERROR),
+    /**
+     * 授权错误
+     */
+    AUTHORIZE_ERROR(CodeConstant.AUTHORIZE_ERROR, MsgConstant.AUTHORIZE_ERROR),
+    ;
 
     ResultEnum(int code, String msg) {
         this.code = code;

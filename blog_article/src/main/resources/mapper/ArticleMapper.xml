@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="plus.kuailefeizhaijidi.blog.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="plus.kuailefeizhaijidi.blog.entity.Article">
+        <id column="article_id" property="articleId" />
+        <result column="category_id" property="categoryId" />
+        <result column="user_id" property="userId" />
+        <result column="tags" property="tags" />
+        <result column="article_title" property="articleTitle" />
+        <result column="article_author" property="articleAuthor" />
+        <result column="article_desc" property="articleDesc" />
+        <result column="article_content" property="articleContent" />
+        <result column="public_status" property="publicStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+</mapper>

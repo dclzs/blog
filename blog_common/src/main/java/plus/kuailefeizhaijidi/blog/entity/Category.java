@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @author dl
  * @since 2020-03-10
  */
-public class Category extends BaseEntity {
+public class Category extends BaseEntity<Category> {
 
     private static final long serialVersionUID = 1L;
 

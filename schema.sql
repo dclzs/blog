@@ -25,3 +25,29 @@ CREATE TABLE article(
     `update_time` DATETIME DEFAULT  NOW() COMMENT '更新时间',
     primary key (`article_id`)
 )ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '文章表';
+
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE user(
+    `user_id` BIGINT(20) COMMENT '用户ID',
+    `avatar` VARCHAR(100) DEFAULT '' COMMENT '头像',
+    `nick_name` VARCHAR(100) DEFAULT '' COMMENT '昵称',
+    `email` VARCHAR(50) DEFAULT '' COMMENT '邮箱',
+    `phone` VARCHAR(50) DEFAULT '' COMMENT '电话',
+    `password` VARCHAR(100) DEFAULT '' COMMENT '密码',
+    `user_desc` VARCHAR(200) COMMENT '描述',
+    `status` TINYINT DEFAULT '1' COMMENT '状态',
+    `create_time` DATETIME DEFAULT  NOW() COMMENT '创建时间',
+    `update_time` DATETIME DEFAULT  NOW() COMMENT '更新时间',
+    primary key (`user_id`)
+)ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '用户表';
+
+
+DROP TABLE IF EXISTS bookmark;
+CREATE TABLE bookmark(
+    `bookmark_id` BIGINT(20) COMMENT '书签ID',
+    `article_id` BIGINT(20) COMMENT '文章ID',
+    `user_id` BIGINT(20) COMMENT '用户ID',
+    `create_time` DATETIME DEFAULT  NOW() COMMENT '创建时间',
+    primary key (`bookmark_id`)
+)ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '书签表';

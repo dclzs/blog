@@ -10,5 +10,6 @@ import java.io.Serializable;
  * @author dl
  * @since 2020-03-10
  */
-public class BaseEntity implements Serializable {
+public abstract class BaseEntity<T> implements Serializable {
+
 }
