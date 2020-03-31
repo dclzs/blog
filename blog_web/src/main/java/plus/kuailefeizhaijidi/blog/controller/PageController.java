@@ -41,7 +41,7 @@ public class PageController extends BaseController {
         Result result = restTemplate.getForObject(getRequestUrl(), Result.class);
         Object data = getData(result);
         if(data == null){
-            return new ModelAndView("404");
+            return ERROR_404;
         }
         return new ModelAndView("post", newHashMap(data));
     }
@@ -68,7 +68,7 @@ public class PageController extends BaseController {
                               @RequestParam(value = "size", defaultValue = "10") Integer size){
         Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
         Map<String, Object> model = newHashMap(getData(result));
-        model.put("title", "肥 宅 基 地");
+        model.put("title", Constant.NAME);
         model.put("index", true);
         model.put("current", current);
         return new ModelAndView("index", model);

@@ -19,6 +19,7 @@ public class Result<T> extends BaseEntity {
     private int code;
     private String msg;
     private String token;
+    private String uuid;
     private T data;
 
     public Result() {
@@ -84,6 +85,18 @@ public class Result<T> extends BaseEntity {
         return new Result<>(ResultEnum.FAULT);
     }
 
+    public static <T> Result<T> fault(String uuid){
+        Result<T> result = new Result<>(ResultEnum.FAULT);
+        result.setUuid(uuid);
+        return result;
+    }
+
+    public static <T> Result<T> custom(ResultEnum resultEnum,String uuid){
+        Result<T> result = new Result<>(resultEnum);
+        result.setUuid(uuid);
+        return result;
+    }
+
     public static <T> Result<T> custom(ResultEnum resultEnum){
         return new Result<>(resultEnum);
     }
@@ -120,6 +133,13 @@ public class Result<T> extends BaseEntity {
         this.data = data;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     @Override
     public String toString() {

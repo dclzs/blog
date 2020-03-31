@@ -12,6 +12,7 @@ import plus.kuailefeizhaijidi.blog.exception.AuthorizeException;
 import plus.kuailefeizhaijidi.blog.exception.ParamException;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author dl
@@ -38,8 +39,9 @@ public class MyExceptionHandler {
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e){
-        log.error("==> BlogException:  {} ", e.getMessage(), e);
-        return new Result(CodeConstant.FAULT, e.getMessage());
+        String uuid = UUID.randomUUID().toString().replace("-","").toUpperCase();
+        log.error("==> BlogException:  UUID:{} {} ", uuid, e.getMessage(), e);
+        return Result.fault(uuid);
     }
 
     @ResponseBody

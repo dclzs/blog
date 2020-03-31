@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.ModelAndView;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.common.MsgConstant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
@@ -33,6 +34,8 @@ public class BaseController {
 
     @Value("${my.article.host}")
     protected String host;
+
+    protected static final ModelAndView ERROR_404 = new ModelAndView("error/404");
 
     protected StringBuffer generatorUrl(String uri) {
         return new StringBuffer(host).append(uri);
