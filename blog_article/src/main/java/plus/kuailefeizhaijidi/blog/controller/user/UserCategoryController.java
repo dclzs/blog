@@ -46,7 +46,7 @@ public class UserCategoryController extends BaseController {
         if (displayStatus != null) {
             wrapper.eq(Category::getDisplayStatus, displayStatus);
         }
-        return new Result<>(ResultEnum.SUCCESS, categoryService.list(wrapper));
+        return Result.success(categoryService.list(wrapper));
     }
 
     @ApiOperation("添加分类")

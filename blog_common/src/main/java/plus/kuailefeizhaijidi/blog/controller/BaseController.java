@@ -7,6 +7,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.common.MsgConstant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
@@ -30,7 +31,8 @@ public class BaseController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    protected String host = "http://127.0.0.1:8080";
+    @Value("${my.article.host}")
+    protected String host;
 
     protected StringBuffer generatorUrl(String uri) {
         return new StringBuffer(host).append(uri);

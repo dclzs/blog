@@ -41,13 +41,22 @@ public class UserController extends BaseController {
 
     @ApiOperation("登录")
     @PostMapping("login")
-    public Result<User> login(@Valid LoginParam loginParam){
+    public Result login(@Valid LoginParam loginParam){
         User login = userService.login(loginParam);
         if (login != null) {
             String token = jwtUtil.createJWT(String.valueOf(login.getUserId()), login.getNickName(), Constant.ROLE_USER);
-            return Result.success(Constant.BEARER_ + token, login);
+            return Result.success(Constant.BEARER_ + token);
         }
         return Result.custom(ResultEnum.ACC_PWD_ERROR);
+    }
+
+    @ApiOperation("获取个人信息")
+    @PostMapping
+    public Result<User> user(){
+        User user = userService.getById(getUserId());
+        user.setPassword(null);
+        user.setStatus(null);
+        return Result.success(user);
     }
 
 }

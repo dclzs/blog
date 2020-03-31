@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
 import plus.kuailefeizhaijidi.blog.mapper.UserMapper;
@@ -41,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User login(LoginParam loginParam) {
         User user = getByEmail(loginParam.getEmail());
-        if (user != null && encoder.matches(loginParam.getPassword(), user.getPassword())) {
+        if (user != null && user.getStatus() == Constant.ENABLE && encoder.matches(loginParam.getPassword(), user.getPassword())) {
             user.setPassword(null);
             return user;
         }

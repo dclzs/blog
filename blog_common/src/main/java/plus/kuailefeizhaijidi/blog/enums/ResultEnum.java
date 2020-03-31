@@ -15,7 +15,7 @@ public enum ResultEnum implements BaseEnum{
     /**
      * 请求成功
      */
-    SUCCESS(CodeConstant.OK, MsgConstant.OK),
+    OK(CodeConstant.OK, MsgConstant.OK),
     /**
      * 请求失败
      */

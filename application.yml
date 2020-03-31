@@ -22,3 +22,7 @@ jwt:
   config:
     key: kuailefeizhaijidi.plus
     ttl: 72000000
+
+my:
+  article:
+    host: http://127.0.0.1:8080

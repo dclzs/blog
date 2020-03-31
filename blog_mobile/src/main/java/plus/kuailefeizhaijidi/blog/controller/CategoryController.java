@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import plus.kuailefeizhaijidi.blog.entity.Result;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 
 import java.util.Objects;
 
@@ -35,7 +34,7 @@ public class CategoryController extends BaseController{
     @ApiOperation("分类列表")
     public Result categoryList(){
         Result result = Objects.requireNonNull(restTemplate.getForObject(getRequestUrl(), Result.class));
-        return new Result<>(ResultEnum.SUCCESS, getData(result));
+        return Result.success(getData(result));
     }
 }
 

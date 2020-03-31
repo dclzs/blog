@@ -69,15 +69,15 @@ public class Result<T> extends BaseEntity {
     }
 
     public static <T> Result<T> success(String token, T t) {
-        return new Result<>(ResultEnum.SUCCESS, token, t);
+        return new Result<>(ResultEnum.OK, token, t);
     }
 
     public static <T> Result<T> success(T t){
-        return new Result<>(ResultEnum.SUCCESS, t);
+        return new Result<>(ResultEnum.OK, t);
     }
 
     public static <T> Result<T> success(){
-        return new Result<>(ResultEnum.SUCCESS);
+        return new Result<>(ResultEnum.OK);
     }
 
     public static <T> Result<T> fault(){

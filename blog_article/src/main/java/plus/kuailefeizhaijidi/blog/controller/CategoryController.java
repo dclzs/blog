@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Category;
 import plus.kuailefeizhaijidi.blog.entity.Result;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.ICategoryService;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class CategoryController extends BaseController {
     @GetMapping
     @ApiOperation("分类列表")
     public Result<List<Category>> categoryList(){
-        return new Result<>(ResultEnum.SUCCESS, categoryService.list(Wrappers.<Category>lambdaQuery().eq(Category::getDisplayStatus, Constant.ENABLE)));
+        return Result.success(categoryService.list(Wrappers.<Category>lambdaQuery().eq(Category::getDisplayStatus, Constant.ENABLE)));
     }
 
 }

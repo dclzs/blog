@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +42,7 @@ public class ArticleController extends BaseController {
     @GetMapping("{articleId}")
     public Result articleByArticleId(@PathVariable("articleId") Long articleId) {
         Result result = restTemplate.getForObject(getRequestUrl(), Result.class);
-        return new Result<>(ResultEnum.SUCCESS, getData(result));
+        return Result.success(getData(result));
     }
 
     @ApiOperation("根据文章分类ID查询")
@@ -56,7 +55,7 @@ public class ArticleController extends BaseController {
                                           @RequestParam(value = "current", defaultValue = "1") Integer current,
                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        return new Result<>(ResultEnum.SUCCESS, getData(result));
+        return Result.success(getData(result));
     }
 
     @ApiOperation("文章分页查询")
@@ -67,7 +66,7 @@ public class ArticleController extends BaseController {
     public Result articleListByCategoryId(@RequestParam(value = "current", defaultValue = "1") Integer current,
                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        return new Result<>(ResultEnum.SUCCESS, getData(result));
+        return Result.success(getData(result));
     }
 
     @ApiOperation("文章ID查询")
@@ -75,7 +74,7 @@ public class ArticleController extends BaseController {
     @PostMapping
     public Result articleListByIds(@RequestParam("ids") List<String> ids){
         if(ids.size() > Constant.MAX_SIZE || ids.isEmpty()) {
-            return new Result<>(ResultEnum.SUCCESS, Collections.emptyList());
+            return Result.success(Collections.emptyList());
         }
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
         map.addAll("ids", ids);
@@ -83,7 +82,7 @@ public class ArticleController extends BaseController {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
         Result result = restTemplate.postForObject(getRequestUrl(), request, Result.class);
-        return new Result<>(ResultEnum.SUCCESS, getData(result));
+        return Result.success(getData(result));
     }
 
 }

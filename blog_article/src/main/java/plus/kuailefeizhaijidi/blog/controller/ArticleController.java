@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Article;
 import plus.kuailefeizhaijidi.blog.entity.Result;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IArticleService;
 
 import java.util.Collections;
@@ -44,7 +43,7 @@ public class ArticleController extends BaseController {
     @ApiImplicitParam(name = "articleId", value = "文章ID", required = true)
     @GetMapping("{articleId}")
     public Result<Article> articleByArticleId(@PathVariable("articleId") Long articleId) {
-        return new Result<>(ResultEnum.SUCCESS, articleService.getOne(select().eq(Article::getArticleId,articleId)));
+        return Result.success(articleService.getOne(select().eq(Article::getArticleId,articleId)));
     }
 
     @ApiOperation("根据文章分类ID查询")
