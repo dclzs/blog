@@ -105,7 +105,7 @@ public class BaseController {
         return getClaims().getSubject();
     }
 
-    protected Claims getClaims() throws AuthorizeException{
+    protected Claims getClaims(){
         String authorization = RequestUtils.getHeader(Constant.AUTHORIZATION);
         if (authorization == null || !authorization.startsWith(Constant.BEARER_)) {
             throw new AuthorizeException(MsgConstant.NOT_LOGIN);

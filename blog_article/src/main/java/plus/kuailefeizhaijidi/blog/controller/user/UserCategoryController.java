@@ -36,9 +36,7 @@ public class UserCategoryController extends BaseController {
         this.categoryService = categoryService;
     }
 
-
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "displayStatus", value = "查询条件 1:显示,0:不显示")})
+    @ApiImplicitParam(name = "displayStatus", value = "查询条件 1:显示,0:不显示")
     @ApiOperation("个人分类列表")
     @GetMapping
     public Result<List<Category>> categoryList(@RequestParam(value = "displayStatus", required = false) Integer displayStatus){
@@ -49,6 +47,7 @@ public class UserCategoryController extends BaseController {
         return Result.success(categoryService.list(wrapper));
     }
 
+    @ApiImplicitParam(name = "categoryName", value = "分类名称", required = true)
     @ApiOperation("添加分类")
     @PostMapping
     public Result<Category> save(Category category) {
@@ -74,7 +73,7 @@ public class UserCategoryController extends BaseController {
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true),
-            @ApiImplicitParam(name = "displayStatus", value = "1:显示,0:不显示")})
+            @ApiImplicitParam(name = "displayStatus", value = "1:显示,0:不显示", required = true)})
     @ApiOperation("修改该分类显示状态")
     @PutMapping("{categoryId}/display/{displayStatus}")
     public Result display(@PathVariable String categoryId, @PathVariable Integer displayStatus){

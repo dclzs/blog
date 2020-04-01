@@ -1,6 +1,8 @@
 package plus.kuailefeizhaijidi.blog.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 
 /**
@@ -11,15 +13,21 @@ import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
  * @author dl
  * @since 2020-03-10
  */
+@ApiModel("响应结果")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result<T> extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty("状态码")
     private int code;
+    @ApiModelProperty("响应信息")
     private String msg;
+    @ApiModelProperty("token（登录时才会返回）")
     private String token;
+    @ApiModelProperty("错误码（出现错误时才会返回）")
     private String uuid;
+    @ApiModelProperty("响应数据")
     private T data;
 
     public Result() {

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -75,6 +76,7 @@ public class BookmarkController extends BaseController {
     }
 
     @ApiOperation("添加书签")
+    @ApiImplicitParam(name = "articleId", value = "文章ID", required = true)
     @PostMapping
     public Result<Bookmark> save(@Valid Bookmark bookmark){
         bookmark.setUserId(getUserId());

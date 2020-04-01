@@ -58,6 +58,10 @@ public class UserArticleController extends BaseController {
     }
 
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true),
+            @ApiImplicitParam(name = "articleTitle", value = "文章标题", required = true),
+            @ApiImplicitParam(name = "articleContent", value = "文章内容", required = true)})
     @ApiOperation("添加文章")
     @PostMapping
     public Result<Article> save(@Valid Article article) {
@@ -89,7 +93,7 @@ public class UserArticleController extends BaseController {
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "articleId", value = "文章ID", required = true),
-            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回")})
+            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回",required = true)})
     @ApiOperation("撤回与发布文章")
     @PutMapping("{articleId}/publish/{publicStatus}")
     public Result publish(@PathVariable String articleId, @PathVariable Integer publicStatus){

@@ -29,7 +29,6 @@ public class Bookmark extends BaseEntity<Bookmark> {
     @ApiModelProperty(value = "文章ID")
     private Long articleId;
 
-    @NotNull
     @ApiModelProperty(value = "用户ID")
     private Long userId;
 

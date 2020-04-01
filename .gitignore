@@ -32,4 +32,5 @@ build/
 
 
 ### Custom ###
+/log/
 *.log
