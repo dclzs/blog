@@ -93,6 +93,9 @@ public class BaseController {
         return JSON.parseObject(JSON.toJSONString(object));
     }
 
+    protected String getToken(Long id, String subject) {
+        return jwtUtil.createJWT(String.valueOf(id), subject, Constant.ROLE_USER);
+    }
 
     protected Long getUserId() throws AuthorizeException {
         return Long.valueOf(getClaims().getId());

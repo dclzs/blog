@@ -77,6 +77,10 @@ public class Result<T> extends BaseEntity {
         return new Result<>(ResultEnum.OK, t);
     }
 
+    public static <T> Result<T> token(String token){
+        return new Result<>(ResultEnum.OK, token);
+    }
+
     public static <T> Result<T> success(){
         return new Result<>(ResultEnum.OK);
     }

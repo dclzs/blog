@@ -12,7 +12,6 @@ import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IUserService;
-import plus.kuailefeizhaijidi.blog.util.JwtUtil;
 
 import javax.validation.Valid;
 
@@ -32,11 +31,8 @@ public class UserController extends BaseController {
 
     private final IUserService userService;
 
-    private final JwtUtil jwtUtil;
-
-    public UserController(IUserService userService, JwtUtil jwtUtil) {
+    public UserController(IUserService userService) {
         this.userService = userService;
-        this.jwtUtil = jwtUtil;
     }
 
     @ApiOperation("登录")
@@ -44,8 +40,7 @@ public class UserController extends BaseController {
     public Result login(@Valid LoginParam loginParam){
         User login = userService.login(loginParam);
         if (login != null) {
-            String token = jwtUtil.createJWT(String.valueOf(login.getUserId()), login.getNickName(), Constant.ROLE_USER);
-            return Result.success(Constant.BEARER_ + token);
+            return Result.token(Constant.BEARER_ + getToken(login.getUserId(), login.getNickName()));
         }
         return Result.custom(ResultEnum.ACC_PWD_ERROR);
     }
