@@ -7,6 +7,7 @@ import plus.kuailefeizhaijidi.blog.entity.Bookmark;
 import plus.kuailefeizhaijidi.blog.exception.BlogException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,9 +39,16 @@ public class BookmarkVo {
         if(bookmarkList.size() != bookmarkVOList.size()){
             throw new BlogException("BookmarkVo 合并失败，长度不一样！");
         }
-        Map<Long, Bookmark> articleMap = bookmarkList.stream().collect(Collectors.toMap(Bookmark::getArticleId, t -> t));
-        for (BookmarkVo record : bookmarkVOList) {
-            record.setCollectTime(articleMap.get(record.getArticleId()).getCreateTime());
+        Map<Long, BookmarkVo> voMap = bookmarkVOList.stream().filter(t -> t != null).collect(Collectors.toMap(BookmarkVo::getArticleId, t -> t));
+        bookmarkVOList = new ArrayList<>();
+        for (Bookmark bookmark : bookmarkList) {
+            BookmarkVo bookmarkVo = voMap.get(bookmark.getArticleId());
+            if(bookmarkVo == null){
+                bookmarkVo = new BookmarkVo();
+            }
+            bookmarkVo.setArticleId(bookmark.getArticleId());
+            bookmarkVo.setCollectTime(bookmark.getCreateTime());
+            bookmarkVOList.add(bookmarkVo);
         }
         return bookmarkVOList;
     }
