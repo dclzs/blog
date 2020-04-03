@@ -13,4 +13,5 @@ public class MsgConstant {
     public static final String LOGIN_EXPIRED = "登录状态失效";
     public static final String INVALID_TOKEN = "无效的 token";
     public static final String ACC_PWD_ERROR = "账号或密码错误";
+    public static final String JSON_PARSE_ERROR = "JSON解析错误";
 }

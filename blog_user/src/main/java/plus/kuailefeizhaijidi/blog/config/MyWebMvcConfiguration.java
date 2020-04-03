@@ -25,15 +25,12 @@ import java.util.List;
 @EnableSwagger2
 public class MyWebMvcConfiguration extends WebMvcConfigurationSupport {
 
-    private final MyJwtFilter myJwtFilter;
     private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
     private final StringHttpMessageConverter stringHttpMessageConverter;
 
 
-    public MyWebMvcConfiguration(MyJwtFilter myJwtFilter,
-                                 MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
+    public MyWebMvcConfiguration(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
                                  StringHttpMessageConverter stringHttpMessageConverter) {
-        this.myJwtFilter = myJwtFilter;
         this.mappingJackson2HttpMessageConverter = mappingJackson2HttpMessageConverter;
         this.stringHttpMessageConverter = stringHttpMessageConverter;
     }
@@ -57,12 +54,7 @@ public class MyWebMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(myJwtFilter)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/swagger-ui.html");
-    }
+    protected void addInterceptors(InterceptorRegistry registry) {}
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {

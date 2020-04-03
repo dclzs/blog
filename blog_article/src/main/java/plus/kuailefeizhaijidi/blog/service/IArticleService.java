@@ -1,7 +1,11 @@
 package plus.kuailefeizhaijidi.blog.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import plus.kuailefeizhaijidi.blog.entity.Article;
+import plus.kuailefeizhaijidi.blog.entity.dto.ArticleDto;
+import plus.kuailefeizhaijidi.blog.entity.param.PageParam;
+import plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo;
 
 /**
  * <p>
@@ -13,4 +17,11 @@ import plus.kuailefeizhaijidi.blog.entity.Article;
  */
 public interface IArticleService extends IService<Article> {
 
+    ArticleVo save(Long userId, ArticleDto param);
+
+    ArticleVo update(Long valueOf, Long articleId, ArticleDto dto);
+
+    boolean updateStatus(Long userId, Long articleId, Integer publicStatus);
+
+    IPage<ArticleVo> pageArticleVo(PageParam param, Long userId);
 }

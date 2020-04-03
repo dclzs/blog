@@ -2,11 +2,13 @@ package plus.kuailefeizhaijidi.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.dozermapper.core.Mapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
+import plus.kuailefeizhaijidi.blog.entity.vo.UserVo;
 import plus.kuailefeizhaijidi.blog.mapper.UserMapper;
 import plus.kuailefeizhaijidi.blog.service.IUserService;
 
@@ -22,9 +24,11 @@ import plus.kuailefeizhaijidi.blog.service.IUserService;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     private final BCryptPasswordEncoder encoder;
+    private final Mapper mapper;
 
-    public UserServiceImpl(BCryptPasswordEncoder encoder) {
+    public UserServiceImpl(BCryptPasswordEncoder encoder, Mapper mapper) {
         this.encoder = encoder;
+        this.mapper = mapper;
     }
 
     @Override
@@ -40,13 +44,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public User login(LoginParam loginParam) {
-        User user = getByEmail(loginParam.getEmail());
-        if (user != null && user.getStatus() == Constant.ENABLE && encoder.matches(loginParam.getPassword(), user.getPassword())) {
+    public User login(LoginParam param) {
+        User user = getByEmail(param.getEmail());
+        if (user != null && user.getStatus() == Constant.ENABLE && encoder.matches(param.getPassword(), user.getPassword())) {
             user.setPassword(null);
             return user;
         }
         return null;
+    }
+
+    @Override
+    public UserVo getVo(Long userId) {
+        return mapper.map(getById(userId), UserVo.class);
     }
 
     private User getByEmail(String email){

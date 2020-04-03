@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
+import plus.kuailefeizhaijidi.blog.util.RemoteCallUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,8 +42,8 @@ public class ArticleController extends BaseController {
     @ApiImplicitParam(name = "articleId", value = "文章ID", required = true)
     @GetMapping("{articleId}")
     public Result articleByArticleId(@PathVariable("articleId") Long articleId) {
-        Result result = restTemplate.getForObject(getRequestUrl(), Result.class);
-        return Result.success(getData(result));
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl(), Result.class);
+        return Result.success(RemoteCallUtils.getData(result));
     }
 
     @ApiOperation("根据文章分类ID查询")
@@ -54,8 +55,8 @@ public class ArticleController extends BaseController {
     public Result articleListByCategoryId(@PathVariable("categoryId") Long categoryId,
                                           @RequestParam(value = "current", defaultValue = "1") Integer current,
                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        return Result.success(getData(result));
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
+        return Result.success(RemoteCallUtils.getData(result));
     }
 
     @ApiOperation("文章分页查询")
@@ -65,8 +66,8 @@ public class ArticleController extends BaseController {
     @GetMapping
     public Result articleListByCategoryId(@RequestParam(value = "current", defaultValue = "1") Integer current,
                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        return Result.success(getData(result));
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
+        return Result.success(RemoteCallUtils.getData(result));
     }
 
     @ApiOperation("文章ID查询")
@@ -81,8 +82,8 @@ public class ArticleController extends BaseController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-        Result result = restTemplate.postForObject(getRequestUrl(), request, Result.class);
-        return Result.success(getData(result));
+        Result result = restTemplate.postForObject(RemoteCallUtils.getRequestUrl(), request, Result.class);
+        return Result.success(RemoteCallUtils.getData(result));
     }
 
 }

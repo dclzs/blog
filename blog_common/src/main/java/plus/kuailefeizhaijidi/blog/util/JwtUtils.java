@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Component
 @ConfigurationProperties("jwt.config")
-public class JwtUtil {
+public class JwtUtils {
 
     private String key ;
 

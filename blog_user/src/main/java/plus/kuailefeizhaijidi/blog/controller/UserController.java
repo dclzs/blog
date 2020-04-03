@@ -2,16 +2,16 @@ package plus.kuailefeizhaijidi.blog.controller;
 
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.User;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
+import plus.kuailefeizhaijidi.blog.entity.vo.UserVo;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IUserService;
 
@@ -37,12 +37,10 @@ public class UserController extends BaseController {
         this.userService = userService;
     }
 
-    @ApiImplicitParams({@ApiImplicitParam(name = "email", value = "邮箱"),
-    @ApiImplicitParam(name = "password", value = "密码")})
     @ApiOperation("登录")
     @PostMapping("login")
-    public Result login(@Valid LoginParam loginParam){
-        User login = userService.login(loginParam);
+    public Result login(@Valid @RequestBody LoginParam param){
+        User login = userService.login(param);
         if (login != null) {
             return Result.token(Constant.BEARER_ + getToken(login.getUserId(), login.getNickName()));
         }
@@ -51,11 +49,9 @@ public class UserController extends BaseController {
 
     @ApiOperation("获取个人信息")
     @PostMapping
-    public Result<User> user(){
-        User user = userService.getById(getUserId());
-        user.setPassword(null);
-        user.setStatus(null);
-        return Result.success(user);
+    public Result<UserVo> user(){
+        UserVo vo = userService.getVo(getUserId());
+        return Result.success(vo);
     }
 
 }

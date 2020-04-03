@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
  * @author dl
  * @since 2020-03-21
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value="User对象", description="用户表")
 public class User extends BaseEntity<User> {
 

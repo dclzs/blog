@@ -18,4 +18,5 @@ public final class Constant {
     public static final int TWO = 2;
     public static final String SPACE = " ";
     public static final String NAME = "肥 宅 基 地";
+    public static final String BACKSLASH = "/";
 }

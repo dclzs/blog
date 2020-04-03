@@ -16,5 +16,46 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <sql id="selectSql">
+        SELECT
+        a.`article_id` AS articleId,
+        a.`category_id` AS categoryId,
+        c.`category_name` AS categoryName,
+        a.`user_id` AS userId,
+        a.`tags` AS tags,
+        a.`article_title` AS articleTitle,
+        a.`article_author` AS articleAuthor,
+        a.`article_desc` AS articleDesc,
+        a.`article_content` AS articleContent,
+        a.`public_status` AS publicStatus,
+        a.`create_time` AS createTime,
+        a.`update_time` AS updateTime
+        FROM article a
+        LEFT JOIN category c on a.category_id = c.category_id
+    </sql>
+    <select id="pageVo" resultType="plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo">
+        <include refid="selectSql"/>
+        <where>
+            a.user_id = #{userId}
+            <if test="w.status!=null">
+                AND a.`public_status` = #{w.status}
+            </if>
+            <if test="w.keyword!=null and w.keyword!=''">
+                AND a.`article_title` like concat('%',#{w.keyword},'%')
+            </if>
+            <if test="w.startDate!=null and w.startDate!=''">
+                AND a.`create_time` >= #{w.startDate}
+            </if>
+            <if test="w.endDate!=null and w.endDate!=''">
+                AND a.`create_time` <![CDATA[ <= ]]> #{w.endDate}
+            </if>
+        </where>
+        order by a.`create_time` desc
+    </select>
+
+    <select id="selectVo" resultType="plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo">
+        <include refid="selectSql"/>
+        Where a.`article_id` = #{articleId}
+    </select>
 
 </mapper>

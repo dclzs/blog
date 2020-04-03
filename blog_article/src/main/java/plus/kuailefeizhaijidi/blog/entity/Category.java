@@ -2,11 +2,9 @@ package plus.kuailefeizhaijidi.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +16,6 @@ import java.time.LocalDateTime;
  * @since 2020-03-10
  */
 @TableName("category")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value="Category对象", description="分类表")
 public class Category extends BaseEntity<Category> {
 
@@ -34,7 +31,6 @@ public class Category extends BaseEntity<Category> {
     @TableField(value = "user_id")
     private Long userId;
 
-    @NotNull
     @ApiModelProperty(value = "分类名称")
     @TableField(value = "category_name")
     private String categoryName;

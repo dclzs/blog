@@ -16,11 +16,8 @@ import java.util.stream.Collectors;
  * @since 2020年03月28日
  */
 @ApiModel("书签")
-public class BookmarkVO {
+public class BookmarkVo {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @ApiModelProperty("书签ID")
-    private Long bookmarkId;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @ApiModelProperty("文章ID")
     private Long articleId;
@@ -37,25 +34,17 @@ public class BookmarkVO {
     @ApiModelProperty("收藏时间")
     private LocalDateTime collectTime;
 
-    public static List<BookmarkVO> merge(List<Bookmark> bookmarkList, List<BookmarkVO> bookmarkVOList) {
+    public static List<BookmarkVo> merge(List<Bookmark> bookmarkList, List<BookmarkVo> bookmarkVOList) {
         if(bookmarkList.size() != bookmarkVOList.size()){
-            throw new BlogException("BookmarkVO 合并失败，长度不一样！");
+            throw new BlogException("BookmarkVo 合并失败，长度不一样！");
         }
         Map<Long, Bookmark> articleMap = bookmarkList.stream().collect(Collectors.toMap(Bookmark::getArticleId, t -> t));
-        for (BookmarkVO record : bookmarkVOList) {
-            record.setBookmarkId(articleMap.get(record.getArticleId()).getBookmarkId());
+        for (BookmarkVo record : bookmarkVOList) {
             record.setCollectTime(articleMap.get(record.getArticleId()).getCreateTime());
         }
         return bookmarkVOList;
     }
 
-    public Long getBookmarkId() {
-        return bookmarkId;
-    }
-
-    public void setBookmarkId(Long bookmarkId) {
-        this.bookmarkId = bookmarkId;
-    }
 
     public Long getArticleId() {
         return articleId;
@@ -115,9 +104,8 @@ public class BookmarkVO {
 
     @Override
     public String toString() {
-        return "BookmarkVO{" +
-                "bookmarkId=" + bookmarkId +
-                ", articleId=" + articleId +
+        return "BookmarkVo{" +
+                "articleId=" + articleId +
                 ", articleTitle='" + articleTitle + '\'' +
                 ", articleDesc='" + articleDesc + '\'' +
                 ", articleAuthor='" + articleAuthor + '\'' +

@@ -1,7 +1,9 @@
 package plus.kuailefeizhaijidi.blog.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import plus.kuailefeizhaijidi.blog.entity.Bookmark;
+import plus.kuailefeizhaijidi.blog.entity.vo.BookmarkVo;
 
 /**
  * <p>
@@ -13,4 +15,7 @@ import plus.kuailefeizhaijidi.blog.entity.Bookmark;
  */
 public interface IBookmarkService extends IService<Bookmark> {
 
+    IPage<BookmarkVo> listVo(Long userId, Integer current, Integer size);
+
+    BookmarkVo getVo(Long bookmarkId);
 }

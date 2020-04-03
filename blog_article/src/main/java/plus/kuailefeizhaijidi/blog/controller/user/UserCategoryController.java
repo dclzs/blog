@@ -1,8 +1,5 @@
 package plus.kuailefeizhaijidi.blog.controller.user;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -10,11 +7,13 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.controller.BaseController;
-import plus.kuailefeizhaijidi.blog.entity.Category;
 import plus.kuailefeizhaijidi.blog.entity.Result;
+import plus.kuailefeizhaijidi.blog.entity.dto.CategoryDto;
+import plus.kuailefeizhaijidi.blog.entity.vo.CategoryVo;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.ICategoryService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,7 +28,6 @@ import java.util.List;
 @RequestMapping("user/category")
 public class UserCategoryController extends BaseController {
 
-
     private final ICategoryService categoryService;
 
     public UserCategoryController(ICategoryService categoryService) {
@@ -39,36 +37,22 @@ public class UserCategoryController extends BaseController {
     @ApiImplicitParam(name = "displayStatus", value = "查询条件 1:显示,0:不显示")
     @ApiOperation("个人分类列表")
     @GetMapping
-    public Result<List<Category>> categoryList(@RequestParam(value = "displayStatus", required = false) Integer displayStatus){
-        LambdaQueryWrapper<Category> wrapper = Wrappers.<Category>lambdaQuery().eq(Category::getUserId, getUserId());
-        if (displayStatus != null) {
-            wrapper.eq(Category::getDisplayStatus, displayStatus);
-        }
-        return Result.success(categoryService.list(wrapper));
+    public Result<List<CategoryVo>> categoryList(@RequestParam(value = "displayStatus", required = false) Integer displayStatus){
+        return Result.success(categoryService.listVo(getUserId(), displayStatus));
     }
 
-    @ApiImplicitParam(name = "categoryName", value = "分类名称", required = true)
-    @ApiOperation("添加分类")
+    @ApiOperation(value = "添加分类",notes = "默认非显示状态")
     @PostMapping
-    public Result<Category> save(Category category) {
-        category.setUserId(getUserId());
-        if(categoryService.save(category)){
-            return Result.success(categoryService.getById(category.getCategoryId()));
-        }
-        return Result.fault();
+    public Result<CategoryVo> save(@Valid @RequestBody CategoryDto dto) {
+        CategoryVo vo = categoryService.save(getUserId(), dto);
+        return Result.success(vo);
     }
-
 
     @ApiOperation("修改分类")
     @PutMapping("{categoryId}")
-    public Result<Category> update(Category category, @PathVariable String categoryId) {
-        LambdaUpdateWrapper<Category> updateWrapper = update(categoryId);
-        category.setDisplayStatus(null);
-        category.setCreateTime(null);
-        if(categoryService.update(category, updateWrapper)){
-            return Result.success(categoryService.getById(categoryId));
-        }
-        return Result.fault();
+    public Result<CategoryVo> update(@RequestBody CategoryDto dto, @PathVariable Long categoryId) {
+        CategoryVo vo = categoryService.update(getUserId(), categoryId, dto);
+        return Result.success(vo);
     }
 
     @ApiImplicitParams({
@@ -76,20 +60,12 @@ public class UserCategoryController extends BaseController {
             @ApiImplicitParam(name = "displayStatus", value = "1:显示,0:不显示", required = true)})
     @ApiOperation("修改该分类显示状态")
     @PutMapping("{categoryId}/display/{displayStatus}")
-    public Result display(@PathVariable String categoryId, @PathVariable Integer displayStatus){
+    public Result display(@PathVariable Long categoryId, @PathVariable Integer displayStatus){
         if(displayStatus == Constant.ENABLE || displayStatus == Constant.DISABLE) {
-            LambdaUpdateWrapper<Category> updateWrapper = update(categoryId);
-            Category category = new Category();
-            category.setDisplayStatus(displayStatus);
-            if (categoryService.update(category, updateWrapper)) {
-                return Result.success(categoryService.getById(categoryId));
-            }
-            return Result.fault();
+            categoryService.updateStatus(getUserId(), categoryId, displayStatus);
+            return Result.success();
         }
         return Result.custom(ResultEnum.PARAM_ERROR);
     }
 
-    private LambdaUpdateWrapper<Category> update(@PathVariable String categoryId) {
-        return Wrappers.<Category>lambdaUpdate().eq(Category::getUserId, getUserId()).eq(Category::getCategoryId, categoryId);
-    }
 }

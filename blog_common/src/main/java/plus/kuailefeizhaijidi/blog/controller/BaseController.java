@@ -1,19 +1,16 @@
 package plus.kuailefeizhaijidi.blog.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.common.MsgConstant;
-import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.exception.AuthorizeException;
-import plus.kuailefeizhaijidi.blog.util.JwtUtil;
+import plus.kuailefeizhaijidi.blog.util.JwtUtils;
 import plus.kuailefeizhaijidi.blog.util.RequestUtils;
 
 import javax.annotation.Resource;
@@ -27,52 +24,12 @@ import java.util.Map;
  */
 public class BaseController {
 
-    @Resource
-    private JwtUtil jwtUtil;
-
     private Logger log = LoggerFactory.getLogger(getClass());
-
-    @Value("${my.article.host}")
-    protected String host;
 
     protected static final ModelAndView ERROR_404 = new ModelAndView("error/404");
 
-    protected StringBuffer generatorUrl(String uri) {
-        return new StringBuffer(host).append(uri);
-    }
-
-    protected String getRequestUrl(String... params) {
-        StringBuffer url = generatorUrl(RequestUtils.getRequestUri().replace(RequestUtils.getRequest().getContextPath(), ""));
-        if (params != null && params.length != 0) {
-            url.append("?");
-            for (int i = 0; i < params.length; i++) {
-                url.append(params[i])
-                   .append("={")
-                   .append(params[i])
-                   .append("}");
-                if (i < params.length - 1) {
-                    url.append("&");
-                }
-            }
-        }
-        log.info("==> requestUrl:{} ", url);
-        return url.toString();
-    }
-
-    protected Object getData(Result result) {
-        if (result == null) {
-            return null;
-        }
-        log.info("==> result:{} =", JSON.toJSONString(result,
-                SerializerFeature.PrettyFormat,
-                SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteDateUseDateFormat));
-        return result.getData();
-    }
-
-    protected String getJson(Result result){
-        return JSON.toJSONString(getData(result));
-    }
+    @Resource
+    private JwtUtils jwtUtil;
 
     protected Map<String,Object> newHashMap(Object... objects){
         if (objects.length % Constant.TWO == 0) {
@@ -83,10 +40,6 @@ public class BaseController {
             return hashMap;
         }
         return Collections.emptyMap();
-    }
-
-    protected Object post(){
-        return null;
     }
 
     protected Map<String,Object> newHashMap(Object object){

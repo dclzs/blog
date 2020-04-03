@@ -1,5 +1,8 @@
 package plus.kuailefeizhaijidi.blog.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -9,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import plus.kuailefeizhaijidi.blog.common.Constant;
-import plus.kuailefeizhaijidi.blog.entity.Category;
 import plus.kuailefeizhaijidi.blog.entity.Result;
+import plus.kuailefeizhaijidi.blog.util.RemoteCallUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +41,8 @@ public class PageController extends BaseController {
 
     @GetMapping("article/{articleId}")
     public ModelAndView article(@PathVariable("articleId") Long articleId) {
-        Result result = restTemplate.getForObject(getRequestUrl(), Result.class);
-        Object data = getData(result);
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl(), Result.class);
+        Object data = RemoteCallUtils.getData(result);
         if(data == null){
             return ERROR_404;
         }
@@ -48,14 +51,15 @@ public class PageController extends BaseController {
 
     @GetMapping("category")
     public ModelAndView classify() throws JsonProcessingException {
-        Result result = restTemplate.getForObject(getRequestUrl(), Result.class);
-        Category[] categories = objectMapper.readValue(getJson(result), Category[].class);
-        for (Category category : categories) {
-            String join = String.join(Constant.SPACE, category.getCategoryName().split(""));
-            category.setCategoryName(join);
-            CATEGORY_MAP.put(category.getCategoryId(), join);
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl(), Result.class);
+        JSONArray array = JSON.parseArray(RemoteCallUtils.getJson(result));
+        for (int i = 0; i < array.size(); i++) {
+            JSONObject object = array.getJSONObject(i);
+            Long categoryId = object.getLong("categoryId");
+            String categoryName = object.getString("categoryName");
+            CATEGORY_MAP.put(categoryId, String.join(Constant.SPACE, categoryName.split("")));
         }
-        return new ModelAndView("category", newHashMap("records", categories));
+        return new ModelAndView("category", newHashMap("records", RemoteCallUtils.getData(result)));
     }
 
     @GetMapping({"/","/index"})
@@ -66,8 +70,8 @@ public class PageController extends BaseController {
     @GetMapping("article")
     public ModelAndView index(@RequestParam(value = "current", defaultValue = "1") Integer current,
                               @RequestParam(value = "size", defaultValue = "10") Integer size){
-        Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        Map<String, Object> model = newHashMap(getData(result));
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
+        Map<String, Object> model = newHashMap(RemoteCallUtils.getData(result));
         model.put("title", Constant.NAME);
         model.put("index", true);
         model.put("current", current);
@@ -78,8 +82,8 @@ public class PageController extends BaseController {
     public ModelAndView index(@PathVariable("categoryId") Long categoryId,
                               @RequestParam(value = "current", defaultValue = "1") Integer current,
                               @RequestParam(value = "size", defaultValue = "10") Integer size){
-        Result result = restTemplate.getForObject(getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
-        Map<String, Object> model = newHashMap(getData(result));
+        Result result = restTemplate.getForObject(RemoteCallUtils.getRequestUrl("current", "size"), Result.class, newHashMap("current", current, "size", size));
+        Map<String, Object> model = newHashMap(RemoteCallUtils.getData(result));
         model.put("title", CATEGORY_MAP.get(categoryId));
         model.put("current", current);
         return new ModelAndView("index", model);

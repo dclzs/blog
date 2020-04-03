@@ -1,74 +1,43 @@
-package plus.kuailefeizhaijidi.blog.entity;
+package plus.kuailefeizhaijidi.blog.entity.vo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 文章表
- * </p>
- *
  * @author dl
- * @since 2020-03-10
+ * @since 2020年4月3日
  */
-public class Article extends BaseEntity<Article> {
+public class ArticleVo {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 文章ID
-     */
+    @ApiModelProperty(value = "文章ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long articleId;
-
-    /**
-     * 分类ID
-     */
+    @ApiModelProperty(value = "分类ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long categoryId;
-
-    /**
-     * 用户ID
-     */
+    @ApiModelProperty(value = "用户ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long userId;
-
-    /**
-     * 标签（逗号分隔）
-     */
+    @ApiModelProperty(value = "分类名称")
+    private String categoryName;
+    @ApiModelProperty(value = "标签（逗号分隔）")
     private String tags;
-
-    /**
-     * 文章标题
-     */
+    @ApiModelProperty(value = "文章标题")
     private String articleTitle;
-
-    /**
-     * 原作者
-     */
+    @ApiModelProperty(value = "原作者")
     private String articleAuthor;
-
-    /**
-     * 文章描述
-     */
+    @ApiModelProperty(value = "文章描述")
     private String articleDesc;
-
-    /**
-     * 文章内容
-     */
+    @ApiModelProperty(value = "文章内容")
     private String articleContent;
-
-    /**
-     * 公开状态
-     */
+    @ApiModelProperty(value = "公开状态")
     private Integer publicStatus;
-
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
+    @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
-
 
     public Long getArticleId() {
         return articleId;
@@ -92,6 +61,14 @@ public class Article extends BaseEntity<Article> {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getTags() {
@@ -160,18 +137,19 @@ public class Article extends BaseEntity<Article> {
 
     @Override
     public String toString() {
-        return "Article{" +
+        return "ArticleVo{" +
                 "articleId=" + articleId +
                 ", categoryId=" + categoryId +
                 ", userId=" + userId +
-                ", tags=" + tags +
-                ", articleTitle=" + articleTitle +
-                ", articleAuthor=" + articleAuthor +
-                ", articleDesc=" + articleDesc +
-                ", articleContent=" + articleContent +
+                ", categoryName='" + categoryName + '\'' +
+                ", tags='" + tags + '\'' +
+                ", articleTitle='" + articleTitle + '\'' +
+                ", articleAuthor='" + articleAuthor + '\'' +
+                ", articleDesc='" + articleDesc + '\'' +
+                ", articleContent='" + articleContent + '\'' +
                 ", publicStatus=" + publicStatus +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                "}";
+                '}';
     }
 }

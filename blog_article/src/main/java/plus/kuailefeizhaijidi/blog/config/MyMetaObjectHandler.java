@@ -27,8 +27,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "publicStatus", Integer.class, Constant.ENABLE);
-        this.strictInsertFill(metaObject, "displayStatus", Integer.class, Constant.ENABLE);
+        this.strictInsertFill(metaObject, "publicStatus", Integer.class, Constant.DISABLE);
+        this.strictInsertFill(metaObject, "displayStatus", Integer.class, Constant.DISABLE);
     }
 
     @Override

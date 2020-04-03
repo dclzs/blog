@@ -1,54 +1,29 @@
-package plus.kuailefeizhaijidi.blog.entity;
+package plus.kuailefeizhaijidi.blog.entity.vo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 分类表
- * </p>
- *
  * @author dl
- * @since 2020-03-10
+ * @since 2020年4月3日
  */
-public class Category extends BaseEntity<Category> {
+public class CategoryVo {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 分类ID
-     */
+    @ApiModelProperty(value = "分类ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long categoryId;
-
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 分类名称
-     */
+    @ApiModelProperty(value = "分类名称")
     private String categoryName;
-
-    /**
-     * 分类描述
-     */
+    @ApiModelProperty(value = "分类描述")
     private String categoryDesc;
-
-    /**
-     * 显示状态
-     */
+    @ApiModelProperty(value = "显示状态")
     private Integer displayStatus;
-
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
+    @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
-
 
     public Long getCategoryId() {
         return categoryId;
@@ -56,14 +31,6 @@ public class Category extends BaseEntity<Category> {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getCategoryName() {
@@ -108,14 +75,13 @@ public class Category extends BaseEntity<Category> {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "CategoryVo{" +
                 "categoryId=" + categoryId +
-                ", userId=" + userId +
-                ", categoryName=" + categoryName +
-                ", categoryDesc=" + categoryDesc +
+                ", categoryName='" + categoryName + '\'' +
+                ", categoryDesc='" + categoryDesc + '\'' +
                 ", displayStatus=" + displayStatus +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                "}";
+                '}';
     }
 }

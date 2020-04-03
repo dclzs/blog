@@ -1,10 +1,6 @@
 package plus.kuailefeizhaijidi.blog.controller.user;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,8 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.controller.BaseController;
-import plus.kuailefeizhaijidi.blog.entity.Article;
 import plus.kuailefeizhaijidi.blog.entity.Result;
+import plus.kuailefeizhaijidi.blog.entity.dto.ArticleDto;
+import plus.kuailefeizhaijidi.blog.entity.param.PageParam;
+import plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
 import plus.kuailefeizhaijidi.blog.service.IArticleService;
 
@@ -41,87 +39,44 @@ public class UserArticleController extends BaseController {
         this.articleService = articleService;
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "current", value = "第n页"),
-            @ApiImplicitParam(name = "size", value = "有n条数据"),
-            @ApiImplicitParam(name = "publicStatus", value = "查询条件 1:发布,0:未发布")})
     @ApiOperation("获取文章")
     @GetMapping
-    public Result<IPage<Article>> articleList(@RequestParam(value = "current", defaultValue = "1") Integer current,
-                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                      @RequestParam(value = "publicStatus", required = false) Integer publicStatus) {
-        LambdaQueryWrapper<Article> wrapper = select().eq(Article::getUserId, getUserId());
-        if(publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE){
-            wrapper.eq(Article::getPublicStatus, publicStatus);
-        }
-        return Result.success(articleService.page(new Page<>(current, size), wrapper));
+    public Result<IPage<ArticleVo>> articleList(PageParam param) {
+        return Result.success(articleService.pageArticleVo(param, getUserId()));
     }
 
-
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true),
-            @ApiImplicitParam(name = "articleTitle", value = "文章标题", required = true),
-            @ApiImplicitParam(name = "articleContent", value = "文章内容", required = true)})
-    @ApiOperation("添加文章")
+    @ApiOperation(value = "添加文章", notes = "默认未发布状态")
     @PostMapping
-    public Result<Article> save(@Valid Article article) {
+    public Result<ArticleVo> save(@Valid @RequestBody ArticleDto dto) {
         Claims claims = getClaims();
-        article.setUserId(Long.valueOf(claims.getId()));
-        if(StringUtils.isEmpty(article.getArticleAuthor())){
-            article.setArticleAuthor(claims.getSubject());
+        if (StringUtils.isEmpty(dto.getArticleAuthor())) {
+            dto.setArticleAuthor(claims.getSubject());
         }
-        if(articleService.save(article)) {
-            return Result.success(articleService.getById(article.getArticleId()));
-        }
-        return Result.fault();
+        ArticleVo vo = articleService.save(Long.valueOf(claims.getId()), dto);
+        return Result.success(vo);
     }
 
 
     @ApiOperation("修改文章")
     @PutMapping("{articleId}")
-    public Result<Article> update(Article article,
-                                  @PathVariable String articleId){
-        article.setPublicStatus(null);
-        article.setCreateTime(null);
-        boolean update = articleService.update(article, update(articleId));
-        if(update){
-            return Result.success(articleService.getById(article.getArticleId()));
-        }
-        return Result.fault();
+    public Result<ArticleVo> update(@RequestBody ArticleDto dto,
+                                    @PathVariable Long articleId) {
+        ArticleVo vo = articleService.update(getUserId(), articleId, dto);
+        return Result.success(vo);
     }
 
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "articleId", value = "文章ID", required = true),
-            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回",required = true)})
+            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回", required = true)})
     @ApiOperation("撤回与发布文章")
     @PutMapping("{articleId}/publish/{publicStatus}")
-    public Result publish(@PathVariable String articleId, @PathVariable Integer publicStatus){
-        if(publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE){
-            LambdaUpdateWrapper<Article> updateWrapper = update(articleId);
-            Article article = new Article();
-            article.setPublicStatus(publicStatus);
-            boolean update = articleService.update(article, updateWrapper);
-            if(update){
-                return Result.success(articleService.getById(article.getArticleId()));
-            }
-            return Result.fault();
+    public Result publish(@PathVariable Long articleId, @PathVariable Integer publicStatus) {
+        if (publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE) {
+            articleService.updateStatus(getUserId(), articleId, publicStatus);
+            return Result.success();
         }
         return Result.custom(ResultEnum.PARAM_ERROR);
     }
 
-    private LambdaUpdateWrapper<Article> update(@PathVariable String articleId) {
-        return Wrappers.<Article>lambdaUpdate().eq(Article::getUserId, getUserId()).eq(Article::getArticleId, articleId);
-    }
-
-
-    private LambdaQueryWrapper<Article> select() {
-        return Wrappers.<Article>lambdaQuery()
-                .select(Article::getArticleId,
-                        Article::getArticleTitle,
-                        Article::getArticleDesc,
-                        Article::getArticleAuthor,
-                        Article::getCreateTime,
-                        Article::getUpdateTime);
-    }
 }

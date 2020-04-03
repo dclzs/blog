@@ -1,6 +1,5 @@
 package plus.kuailefeizhaijidi.blog.entity.param;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Email;
@@ -11,7 +10,6 @@ import javax.validation.constraints.Size;
  * @author dl
  * @since 2020年03月21日
  */
-@ApiModel("登录参数")
 public class LoginParam {
 
     @NotNull
@@ -38,5 +36,13 @@ public class LoginParam {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginParam{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

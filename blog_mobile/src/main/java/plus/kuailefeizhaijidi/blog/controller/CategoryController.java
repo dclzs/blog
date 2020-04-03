@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import plus.kuailefeizhaijidi.blog.entity.Result;
+import plus.kuailefeizhaijidi.blog.util.RemoteCallUtils;
 
 import java.util.Objects;
 
@@ -33,8 +34,8 @@ public class CategoryController extends BaseController{
     @GetMapping
     @ApiOperation("分类列表")
     public Result categoryList(){
-        Result result = Objects.requireNonNull(restTemplate.getForObject(getRequestUrl(), Result.class));
-        return Result.success(getData(result));
+        Result result = Objects.requireNonNull(restTemplate.getForObject(RemoteCallUtils.getRequestUrl(), Result.class));
+        return Result.success(RemoteCallUtils.getData(result));
     }
 }
 

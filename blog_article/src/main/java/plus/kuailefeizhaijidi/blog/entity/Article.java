@@ -2,11 +2,9 @@ package plus.kuailefeizhaijidi.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +16,6 @@ import java.time.LocalDateTime;
  * @since 2020-03-10
  */
 @TableName("article")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value="Article对象", description="文章表")
 public class Article extends BaseEntity<Article> {
 
@@ -29,7 +26,6 @@ public class Article extends BaseEntity<Article> {
     @TableId(value = "article_id", type = IdType.ASSIGN_ID)
     private Long articleId;
 
-    @NotNull
     @ApiModelProperty(value = "分类ID")
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @TableField(value = "category_id")
@@ -43,7 +39,6 @@ public class Article extends BaseEntity<Article> {
     @ApiModelProperty(value = "标签（逗号分隔）")
     private String tags;
 
-    @NotNull
     @ApiModelProperty(value = "文章标题")
     @TableField(value = "article_title")
     private String articleTitle;
@@ -56,7 +51,6 @@ public class Article extends BaseEntity<Article> {
     @TableField(value = "article_desc")
     private String articleDesc;
 
-    @NotNull
     @ApiModelProperty(value = "文章内容")
     @TableField(value = "article_content")
     private String articleContent;
