@@ -60,10 +60,11 @@ public class UserCategoryController extends BaseController {
             @ApiImplicitParam(name = "displayStatus", value = "1:显示,0:不显示", required = true)})
     @ApiOperation("修改该分类显示状态")
     @PutMapping("{categoryId}/display/{displayStatus}")
-    public Result display(@PathVariable Long categoryId, @PathVariable Integer displayStatus){
+    public Result<CategoryVo> display(@PathVariable Long categoryId, @PathVariable Integer displayStatus){
         if(displayStatus == Constant.ENABLE || displayStatus == Constant.DISABLE) {
-            categoryService.updateStatus(getUserId(), categoryId, displayStatus);
-            return Result.success();
+            if(categoryService.updateStatus(getUserId(), categoryId, displayStatus)) {
+                return Result.success(categoryService.getVo(categoryId));
+            }
         }
         return Result.custom(ResultEnum.PARAM_ERROR);
     }

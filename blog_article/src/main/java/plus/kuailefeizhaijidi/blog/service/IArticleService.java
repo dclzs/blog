@@ -24,4 +24,6 @@ public interface IArticleService extends IService<Article> {
     boolean updateStatus(Long userId, Long articleId, Integer publicStatus);
 
     IPage<ArticleVo> pageArticleVo(PageParam param, Long userId);
+
+    ArticleVo getVo(Long articleId);
 }

@@ -71,10 +71,11 @@ public class UserArticleController extends BaseController {
             @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回", required = true)})
     @ApiOperation("撤回与发布文章")
     @PutMapping("{articleId}/publish/{publicStatus}")
-    public Result publish(@PathVariable Long articleId, @PathVariable Integer publicStatus) {
+    public Result<ArticleVo> publish(@PathVariable Long articleId, @PathVariable Integer publicStatus) {
         if (publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE) {
-            articleService.updateStatus(getUserId(), articleId, publicStatus);
-            return Result.success();
+            if(articleService.updateStatus(getUserId(), articleId, publicStatus)) {
+                return Result.success(articleService.getVo(articleId));
+            }
         }
         return Result.custom(ResultEnum.PARAM_ERROR);
     }

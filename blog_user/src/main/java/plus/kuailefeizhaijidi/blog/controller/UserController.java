@@ -4,7 +4,6 @@ package plus.kuailefeizhaijidi.blog.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.kuailefeizhaijidi.blog.common.Constant;
@@ -39,7 +38,7 @@ public class UserController extends BaseController {
 
     @ApiOperation("登录")
     @PostMapping("login")
-    public Result login(@Valid @RequestBody LoginParam param){
+    public Result login(@Valid LoginParam param){
         User login = userService.login(param);
         if (login != null) {
             return Result.token(Constant.BEARER_ + getToken(login.getUserId(), login.getNickName()));

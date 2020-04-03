@@ -27,4 +27,6 @@ public interface ICategoryService extends IService<Category> {
 
     boolean isExists(Long userId, Long categoryId);
 
+    CategoryVo getVo(Long categoryId);
+
 }

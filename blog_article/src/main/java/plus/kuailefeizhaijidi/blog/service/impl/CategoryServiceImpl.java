@@ -86,4 +86,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 .eq(Category::getUserId, userId);
         return getOne(wrapper) != null;
     }
+
+    @Override
+    public CategoryVo getVo(Long categoryId) {
+        Category category = getById(categoryId);
+        CategoryVo vo = mapper.map(category, CategoryVo.class);
+        return vo;
+    }
 }

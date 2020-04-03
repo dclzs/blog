@@ -79,4 +79,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return baseMapper.pageVo(page, param, userId);
     }
 
+    @Override
+    public ArticleVo getVo(Long articleId) {
+        return baseMapper.selectVo(articleId);
+    }
+
 }
