@@ -13,7 +13,6 @@ import plus.kuailefeizhaijidi.blog.exception.AuthorizeException;
 import plus.kuailefeizhaijidi.blog.util.JwtUtils;
 import plus.kuailefeizhaijidi.blog.util.RequestUtils;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +26,6 @@ public class BaseController {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     protected static final ModelAndView ERROR_404 = new ModelAndView("error/404");
-
-    @Resource
-    private JwtUtils jwtUtil;
 
     protected Map<String,Object> newHashMap(Object... objects){
         if (objects.length % Constant.TWO == 0) {
@@ -47,7 +43,7 @@ public class BaseController {
     }
 
     protected String getToken(Long id, String subject) {
-        return jwtUtil.createJWT(String.valueOf(id), subject, Constant.ROLE_USER);
+        return JwtUtils.me().createJWT(String.valueOf(id), subject, Constant.ROLE_USER);
     }
 
     protected Long getUserId() throws AuthorizeException {
@@ -65,7 +61,7 @@ public class BaseController {
         }
         String token = authorization.replace(Constant.BEARER_, "");
         try {
-            return jwtUtil.parseJWT(token);
+            return JwtUtils.me().parseJWT(token);
         } catch (ExpiredJwtException e) {
             log.error("==> authorize => ExpiredJwtException: {}", e.getMessage());
             throw new AuthorizeException(MsgConstant.LOGIN_EXPIRED);

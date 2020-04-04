@@ -37,6 +37,10 @@ public class JwtUtils {
         this.ttl = ttl;
     }
 
+    public static final JwtUtils me(){
+        return (JwtUtils) SpringUtils.getBean("jwtUtils");
+    }
+
     /**
      * 生成JWT
      *

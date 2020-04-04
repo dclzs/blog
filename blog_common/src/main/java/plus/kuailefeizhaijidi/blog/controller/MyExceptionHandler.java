@@ -9,7 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartException;
 import plus.kuailefeizhaijidi.blog.common.CodeConstant;
+import plus.kuailefeizhaijidi.blog.common.MsgConstant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.exception.AuthorizeException;
 import plus.kuailefeizhaijidi.blog.exception.ParamException;
@@ -31,8 +33,9 @@ public class MyExceptionHandler {
     public Result paramException(Exception e){
         if(e instanceof BindException){
             BindException e1 = (BindException) e;
-            log.error("==> BindException:  {} ", e1.getAllErrors());
-            return new Result(CodeConstant.PARAM_ERROR, Objects.requireNonNull(e1.getFieldError()).getDefaultMessage());
+            log.error("==> BindException:  {} ", e1.getMessage());
+            FieldError fieldError = e1.getBindingResult().getFieldError();
+            return new Result(CodeConstant.PARAM_ERROR, Objects.requireNonNull(fieldError).getField() + fieldError.getDefaultMessage());
         }else if(e instanceof MethodArgumentNotValidException){
             MethodArgumentNotValidException e1 = (MethodArgumentNotValidException) e;
             log.error("==> MethodArgumentNotValidException:  {} ", e1.getMessage());
@@ -52,11 +55,10 @@ public class MyExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(Exception.class)
-    public Result exception(Exception e){
-        String uuid = UUID.randomUUID().toString().replace("-","").toUpperCase();
-        log.error("==> BlogException:  UUID:{} {} ", uuid, e.getMessage(), e);
-        return Result.fault(uuid);
+    @ExceptionHandler(MultipartException.class)
+    public Result handleError1(MultipartException e) {
+        log.error("==> MultipartException: {} ", e.getMessage());
+        return new Result(CodeConstant.FAULT, MsgConstant.UPLOAD_FILE_ERROR);
     }
 
     @ResponseBody
@@ -66,5 +68,18 @@ public class MyExceptionHandler {
         return new Result(CodeConstant.AUTHORIZE_ERROR, e.getMessage());
     }
 
+
+    @ResponseBody
+    @ExceptionHandler(Exception.class)
+    public Result exception(Exception e){
+        String uuid = getUuid();
+        log.error("==> BlogException:  UUID:{} {} ", uuid, e.getMessage(), e);
+        return Result.fault(uuid);
+    }
+
+    private String getUuid() {
+        String s = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        return "E" + s;
+    }
 
 }

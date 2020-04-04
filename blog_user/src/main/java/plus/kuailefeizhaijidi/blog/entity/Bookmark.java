@@ -21,7 +21,7 @@ public class Bookmark extends BaseEntity<Bookmark> {
 
     private static final long serialVersionUID=1L;
 
-    @TableId(value = "bookmark_id",type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "书签ID")
     private Long bookmarkId;
 

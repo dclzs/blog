@@ -24,14 +24,13 @@ public class User extends BaseEntity<User> {
     private static final long serialVersionUID=1L;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @TableId(value = "user_id",type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "用户ID")
     private Long userId;
 
     @ApiModelProperty(value = "头像")
     private String avatar;
 
-    @TableField("nick_name")
     @ApiModelProperty(value = "昵称")
     private String nickName;
 
@@ -44,7 +43,6 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty(value = "密码")
     private String password;
 
-    @TableField("user_desc")
     @ApiModelProperty(value = "描述")
     private String userDesc;
 
@@ -52,11 +50,11 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty(value = "状态")
     private Integer status;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 

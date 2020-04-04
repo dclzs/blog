@@ -14,12 +14,12 @@ public class LoginParam {
 
     @NotNull
     @Email
-    @ApiModelProperty("邮箱")
+    @ApiModelProperty(value = "邮箱", required = true, dataType = "string")
     private String email;
 
     @Size(min = 6)
     @NotNull
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码", required = true, dataType = "string")
     private String password;
 
     public String getEmail() {

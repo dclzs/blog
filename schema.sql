@@ -51,3 +51,14 @@ CREATE TABLE bookmark(
     `create_time` DATETIME DEFAULT  NOW() COMMENT '创建时间',
     primary key (`bookmark_id`)
 )ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '书签表';
+
+DROP TABLE IF EXISTS resource;
+CREATE TABLE resource(
+     `resource_id` BIGINT(20) COMMENT '资源ID',
+     `user_id` BIGINT(20) COMMENT '用户ID',
+     `resource_key` VARCHAR(200) COMMENT '资源key',
+     `resource_hash` VARCHAR(200) COMMENT '资源hash值',
+     `resource_name` VARCHAR(200) COMMENT '资源名称',
+     `create_time` DATETIME DEFAULT  NOW() COMMENT '上传时间',
+     primary key (`resource_id`)
+)ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '资源表';
