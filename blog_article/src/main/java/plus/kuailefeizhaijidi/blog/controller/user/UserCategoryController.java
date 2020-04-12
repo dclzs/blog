@@ -11,6 +11,7 @@ import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.dto.CategoryDto;
 import plus.kuailefeizhaijidi.blog.entity.vo.CategoryVo;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
+import plus.kuailefeizhaijidi.blog.exception.ParamException;
 import plus.kuailefeizhaijidi.blog.service.ICategoryService;
 
 import javax.validation.Valid;
@@ -51,7 +52,11 @@ public class UserCategoryController extends BaseController {
     @ApiOperation("修改分类")
     @PutMapping("{categoryId}")
     public Result<CategoryVo> update(@RequestBody CategoryDto dto, @PathVariable Long categoryId) {
-        CategoryVo vo = categoryService.update(getUserId(), categoryId, dto);
+        Long userId = getUserId();
+        if (!categoryService.isExists(userId, categoryId)) {
+            throw new ParamException("categoryId 错误");
+        }
+        CategoryVo vo = categoryService.update(userId, categoryId, dto);
         return Result.success(vo);
     }
 

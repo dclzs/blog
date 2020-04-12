@@ -62,3 +62,5 @@ CREATE TABLE resource(
      `create_time` DATETIME DEFAULT  NOW() COMMENT '上传时间',
      primary key (`resource_id`)
 )ENGINE = INNODB DEFAULT CHARSET 'UTF8' COMMENT '资源表';
+
+ALTER TABLE `article` ADD COLUMN `article_markdown` TEXT COMMENT '文章内容 - markdown' AFTER `article_content`;

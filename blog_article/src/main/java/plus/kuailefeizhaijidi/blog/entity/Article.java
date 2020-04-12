@@ -51,9 +51,12 @@ public class Article extends BaseEntity<Article> {
     @TableField(value = "article_desc")
     private String articleDesc;
 
-    @ApiModelProperty(value = "文章内容")
+    @ApiModelProperty(value = "文章内容 - html")
     @TableField(value = "article_content")
     private String articleContent;
+
+    @ApiModelProperty(value = "文章内容 - markdown")
+    private String articleMarkdown;
 
     @ApiModelProperty(value = "公开状态")
     @TableField(value = "public_status", fill = FieldFill.INSERT)
@@ -156,20 +159,29 @@ public class Article extends BaseEntity<Article> {
         this.updateTime = updateTime;
     }
 
+    public String getArticleMarkdown() {
+        return articleMarkdown;
+    }
+
+    public void setArticleMarkdown(String articleMarkdown) {
+        this.articleMarkdown = articleMarkdown;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
                 "articleId=" + articleId +
                 ", categoryId=" + categoryId +
                 ", userId=" + userId +
-                ", tags=" + tags +
-                ", articleTitle=" + articleTitle +
-                ", articleAuthor=" + articleAuthor +
-                ", articleDesc=" + articleDesc +
-                ", articleContent=" + articleContent +
+                ", tags='" + tags + '\'' +
+                ", articleTitle='" + articleTitle + '\'' +
+                ", articleAuthor='" + articleAuthor + '\'' +
+                ", articleDesc='" + articleDesc + '\'' +
+                ", articleContent='" + articleContent + '\'' +
+                ", articleMarkdown='" + articleMarkdown + '\'' +
                 ", publicStatus=" + publicStatus +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                "}";
+                '}';
     }
 }

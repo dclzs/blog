@@ -26,4 +26,6 @@ public interface IArticleService extends IService<Article> {
     IPage<ArticleVo> pageArticleVo(PageParam param, Long userId);
 
     ArticleVo getVo(Long articleId);
+
+    Article get(Long userId, Long articleId);
 }

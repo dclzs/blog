@@ -17,9 +17,6 @@ public class ArticleVo {
     @ApiModelProperty(value = "分类ID")
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long categoryId;
-    @ApiModelProperty(value = "用户ID")
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Long userId;
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
     @ApiModelProperty(value = "标签（逗号分隔）")
@@ -30,8 +27,10 @@ public class ArticleVo {
     private String articleAuthor;
     @ApiModelProperty(value = "文章描述")
     private String articleDesc;
-    @ApiModelProperty(value = "文章内容")
+    @ApiModelProperty(value = "文章内容 - html")
     private String articleContent;
+    @ApiModelProperty(value = "文章内容 - markdown")
+    private String articleMarkdown;
     @ApiModelProperty(value = "公开状态")
     private Integer publicStatus;
     @ApiModelProperty(value = "创建时间")
@@ -53,14 +52,6 @@ public class ArticleVo {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getCategoryName() {
@@ -135,18 +126,26 @@ public class ArticleVo {
         this.updateTime = updateTime;
     }
 
+    public String getArticleMarkdown() {
+        return articleMarkdown;
+    }
+
+    public void setArticleMarkdown(String articleMarkdown) {
+        this.articleMarkdown = articleMarkdown;
+    }
+
     @Override
     public String toString() {
         return "ArticleVo{" +
                 "articleId=" + articleId +
                 ", categoryId=" + categoryId +
-                ", userId=" + userId +
                 ", categoryName='" + categoryName + '\'' +
                 ", tags='" + tags + '\'' +
                 ", articleTitle='" + articleTitle + '\'' +
                 ", articleAuthor='" + articleAuthor + '\'' +
                 ", articleDesc='" + articleDesc + '\'' +
                 ", articleContent='" + articleContent + '\'' +
+                ", articleMarkdown='" + articleMarkdown + '\'' +
                 ", publicStatus=" + publicStatus +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +

@@ -24,8 +24,12 @@ public class ArticleDto {
     private String articleAuthor;
     @ApiModelProperty(value = "文章描述")
     private String articleDesc;
-    @ApiModelProperty(value = "文章内容")
+    @ApiModelProperty(value = "文章内容 - html")
     private String articleContent;
+    @ApiModelProperty(value = "文章内容 - markdown")
+    private String articleMarkdown;
+    @ApiModelProperty(value = "发布状态: 1发布，0未发布")
+    private Integer publicStatus;
 
     public Long getCategoryId() {
         return categoryId;
@@ -75,6 +79,22 @@ public class ArticleDto {
         this.articleContent = articleContent;
     }
 
+    public String getArticleMarkdown() {
+        return articleMarkdown;
+    }
+
+    public void setArticleMarkdown(String articleMarkdown) {
+        this.articleMarkdown = articleMarkdown;
+    }
+
+    public Integer getPublicStatus() {
+        return publicStatus;
+    }
+
+    public void setPublicStatus(Integer publicStatus) {
+        this.publicStatus = publicStatus;
+    }
+
     @Override
     public String toString() {
         return "ArticleDto{" +
@@ -84,6 +104,8 @@ public class ArticleDto {
                 ", articleAuthor='" + articleAuthor + '\'' +
                 ", articleDesc='" + articleDesc + '\'' +
                 ", articleContent='" + articleContent + '\'' +
+                ", articleMarkdown='" + articleMarkdown + '\'' +
+                ", publicStatus=" + publicStatus +
                 '}';
     }
 }

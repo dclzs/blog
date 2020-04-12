@@ -3,18 +3,15 @@ package plus.kuailefeizhaijidi.blog.controller.user;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.controller.BaseController;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.dto.ArticleDto;
 import plus.kuailefeizhaijidi.blog.entity.param.PageParam;
 import plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo;
-import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
+import plus.kuailefeizhaijidi.blog.exception.ParamException;
 import plus.kuailefeizhaijidi.blog.service.IArticleService;
 
 import javax.validation.Valid;
@@ -39,13 +36,24 @@ public class UserArticleController extends BaseController {
         this.articleService = articleService;
     }
 
+    @ApiOperation("获取指定文章信息")
+    @GetMapping("{articleId}")
+    public Result<ArticleVo> article(@PathVariable Long articleId){
+        Long userId = getUserId();
+        if(articleService.get(userId, articleId) == null){
+            return Result.success();
+        }else {
+            return Result.success(articleService.getVo(articleId));
+        }
+    }
+
     @ApiOperation("获取文章")
     @GetMapping
     public Result<IPage<ArticleVo>> articleList(PageParam param) {
         return Result.success(articleService.pageArticleVo(param, getUserId()));
     }
 
-    @ApiOperation(value = "添加文章", notes = "默认未发布状态")
+    @ApiOperation(value = "添加文章")
     @PostMapping
     public Result<ArticleVo> save(@Valid @RequestBody ArticleDto dto) {
         Claims claims = getClaims();
@@ -61,23 +69,27 @@ public class UserArticleController extends BaseController {
     @PutMapping("{articleId}")
     public Result<ArticleVo> update(@RequestBody ArticleDto dto,
                                     @PathVariable Long articleId) {
-        ArticleVo vo = articleService.update(getUserId(), articleId, dto);
+        Long userId = getUserId();
+        if(null == articleService.get(userId, articleId)){
+            throw new ParamException("articleId 错误");
+        }
+        ArticleVo vo = articleService.update(userId, articleId, dto);
         return Result.success(vo);
     }
 
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "articleId", value = "文章ID", required = true),
-            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回", required = true)})
-    @ApiOperation("撤回与发布文章")
-    @PutMapping("{articleId}/publish/{publicStatus}")
-    public Result<ArticleVo> publish(@PathVariable Long articleId, @PathVariable Integer publicStatus) {
-        if (publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE) {
-            if(articleService.updateStatus(getUserId(), articleId, publicStatus)) {
-                return Result.success(articleService.getVo(articleId));
-            }
-        }
-        return Result.custom(ResultEnum.PARAM_ERROR);
-    }
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "articleId", value = "文章ID", required = true),
+//            @ApiImplicitParam(name = "publicStatus", value = "1:发布,0:撤回", required = true)})
+//    @ApiOperation("撤回与发布文章")
+//    @PutMapping("{articleId}/publish/{publicStatus}")
+//    public Result<ArticleVo> publish(@PathVariable Long articleId, @PathVariable Integer publicStatus) {
+//        if (publicStatus == Constant.ENABLE || publicStatus == Constant.DISABLE) {
+//            if(articleService.updateStatus(getUserId(), articleId, publicStatus)) {
+//                return Result.success(articleService.getVo(articleId));
+//            }
+//        }
+//        return Result.custom(ResultEnum.PARAM_ERROR);
+//    }
 
 }

@@ -1,5 +1,6 @@
 package plus.kuailefeizhaijidi.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -82,6 +83,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public ArticleVo getVo(Long articleId) {
         return baseMapper.selectVo(articleId);
+    }
+
+    @Override
+    public Article get(Long userId, Long articleId){
+        LambdaQueryWrapper<Article> wrapper = Wrappers.<Article>lambdaQuery()
+                .eq(Article::getArticleId, articleId)
+                .eq(Article::getUserId, userId);
+        return getOne(wrapper);
     }
 
 }

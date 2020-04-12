@@ -45,9 +45,13 @@ public class WebLogAspect {
         String authorization = request.getHeader(Constant.AUTHORIZATION);
         if (authorization != null && authorization.startsWith(Constant.BEARER_)) {
             authorization = authorization.replace(Constant.BEARER_, "");
-            Claims claims = JwtUtils.me().parseJWT(authorization);
-            log.info("<> USER_ID: {}", claims.getId());
-            log.info("<> USERNAME: {}", claims.getSubject());
+            try {
+                Claims claims =  JwtUtils.me().parseJWT(authorization);
+                log.info("<> USER_ID: {}", claims.getId());
+                log.info("<> USERNAME: {}", claims.getSubject());
+            }catch (Exception e) {
+                log.error("==> authorize: token 错误");
+            }
         }
         log.info("<> IP: {}", request.getRemoteAddr());
         log.info("<> URL: {}", request.getRequestURL().toString());

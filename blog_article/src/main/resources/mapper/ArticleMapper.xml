@@ -12,6 +12,7 @@
         <result column="article_author" property="articleAuthor" />
         <result column="article_desc" property="articleDesc" />
         <result column="article_content" property="articleContent" />
+        <result column="article_markdown" property="articleMarkdown" />
         <result column="public_status" property="publicStatus" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -21,12 +22,12 @@
         a.`article_id` AS articleId,
         a.`category_id` AS categoryId,
         c.`category_name` AS categoryName,
-        a.`user_id` AS userId,
         a.`tags` AS tags,
         a.`article_title` AS articleTitle,
         a.`article_author` AS articleAuthor,
         a.`article_desc` AS articleDesc,
         a.`article_content` AS articleContent,
+        a.`article_markdown` AS articleMarkdown,
         a.`public_status` AS publicStatus,
         a.`create_time` AS createTime,
         a.`update_time` AS updateTime
@@ -34,7 +35,19 @@
         LEFT JOIN category c on a.category_id = c.category_id
     </sql>
     <select id="pageVo" resultType="plus.kuailefeizhaijidi.blog.entity.vo.ArticleVo">
-        <include refid="selectSql"/>
+        SELECT
+            a.`article_id` AS articleId,
+            a.`category_id` AS categoryId,
+            c.`category_name` AS categoryName,
+            a.`tags` AS tags,
+            a.`article_title` AS articleTitle,
+            a.`article_author` AS articleAuthor,
+            a.`article_desc` AS articleDesc,
+            a.`public_status` AS publicStatus,
+            a.`create_time` AS createTime,
+            a.`update_time` AS updateTime
+        FROM article a
+        LEFT JOIN category c on a.category_id = c.category_id
         <where>
             a.user_id = #{userId}
             <if test="w.status!=null">
