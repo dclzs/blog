@@ -37,7 +37,7 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation("修改密码")
-    @PostMapping
+    @PostMapping("update")
     public Result update(@Valid LoginParam param){
         if (getClaims() != null) {
             return userService.updatePassword(param) ? Result.success() : Result.fault();
