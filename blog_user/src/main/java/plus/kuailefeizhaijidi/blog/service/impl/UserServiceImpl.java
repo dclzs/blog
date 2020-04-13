@@ -1,5 +1,6 @@
 package plus.kuailefeizhaijidi.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.dozermapper.core.Mapper;
@@ -41,6 +42,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean updatePassword(LoginParam param){
+        if(getByEmail(param.getEmail()) == null){
+            String password = encoder.encode(param.getPassword());
+            LambdaUpdateWrapper<User> updateWrapper = Wrappers.<User>lambdaUpdate()
+                    .eq(User::getEmail, param.getEmail())
+                    .set(User::getPassword, password);
+            return update(updateWrapper);
+        }
+        return false;
     }
 
     @Override

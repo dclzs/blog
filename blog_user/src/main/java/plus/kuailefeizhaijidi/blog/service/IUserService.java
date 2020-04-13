@@ -17,6 +17,8 @@ public interface IUserService extends IService<User> {
 
     User add(User user);
 
+    boolean updatePassword(LoginParam param);
+
     User login(LoginParam param);
 
     UserVo getVo(Long userId);
