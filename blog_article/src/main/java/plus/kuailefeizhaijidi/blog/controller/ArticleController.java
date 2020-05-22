@@ -43,7 +43,7 @@ public class ArticleController extends BaseController {
     @ApiImplicitParam(name = "articleId", value = "文章ID", required = true)
     @GetMapping("{articleId}")
     public Result<Article> articleByArticleId(@PathVariable("articleId") Long articleId) {
-        return Result.success(articleService.getOne(select().eq(Article::getArticleId,articleId)));
+        return Result.success(articleService.getOne(select().eq(Article::getArticleId, articleId)));
     }
 
     @ApiOperation("根据文章分类ID查询")
@@ -87,7 +87,8 @@ public class ArticleController extends BaseController {
                         Article::getArticleAuthor,
                         Article::getCreateTime,
                         Article::getUpdateTime)
-                .eq(Article::getPublicStatus, Constant.ENABLE);
+                .eq(Article::getPublicStatus, Constant.ENABLE)
+                .orderByDesc(Article::getCreateTime);
     }
 
 

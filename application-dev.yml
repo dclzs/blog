@@ -1,0 +1,36 @@
+spring:                                                         # 表示该配置直接为Spring容器负责处理
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource                # 配置当前要使用的数据源的操作类型那个
+    driver-class-name: com.mysql.cj.jdbc.Driver                 # 配置MySQL的驱动程序类
+    url: jdbc:mysql://47.101.169.28:3307/blog?characterEncoding=utf8
+    username: root
+    password: ao-mysql
+    druid:
+      filters: stat,wall,log4j                                  # druid监控配置
+      max-active: 20
+      initial-size: 1                                           # 初始化提供的连接数
+      max-wait: 60000
+      min-idle: 1                                               # 数据库连接池的最小维持连接数
+      time-between-eviction-runs-millis: 60000                  # 每30秒运行一次空闲连接回收器
+      min-evictable-idle-time-millis: 300000                    # 池中的连接空闲30分钟后被回收,默认值就是30分钟。
+      test-while-idle: true                                     # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.
+      test-on-borrow: false                                     # 借出连接时不要测试，否则很影响性能
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      async-init: true
+
+jwt:
+  config:
+    key: kuailefeizhaijidi.plus
+    ttl: 72000000
+
+qiniu:
+  config:
+    accessKey:
+    secretKey:
+    bucket:
+
+my:
+  article:
+    host: http://127.0.0.1:8080

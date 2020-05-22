@@ -2,6 +2,7 @@ package plus.kuailefeizhaijidi.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import plus.kuailefeizhaijidi.blog.entity.User;
+import plus.kuailefeizhaijidi.blog.entity.dto.UserDto;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
 import plus.kuailefeizhaijidi.blog.entity.vo.UserVo;
 
@@ -22,4 +23,6 @@ public interface IUserService extends IService<User> {
     User login(LoginParam param);
 
     UserVo getVo(Long userId);
+
+    boolean register(UserDto dto);
 }

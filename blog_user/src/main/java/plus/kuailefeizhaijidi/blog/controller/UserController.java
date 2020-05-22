@@ -4,11 +4,13 @@ package plus.kuailefeizhaijidi.blog.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.Result;
 import plus.kuailefeizhaijidi.blog.entity.User;
+import plus.kuailefeizhaijidi.blog.entity.dto.UserDto;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
 import plus.kuailefeizhaijidi.blog.entity.vo.UserVo;
 import plus.kuailefeizhaijidi.blog.enums.ResultEnum;
@@ -53,6 +55,12 @@ public class UserController extends BaseController {
             return Result.token(Constant.BEARER_ + getToken(login.getUserId(), login.getNickName()));
         }
         return Result.custom(ResultEnum.ACC_PWD_ERROR);
+    }
+
+    @ApiOperation("注册")
+    @PostMapping("register")
+    public Result register(@RequestBody @Valid UserDto dto){
+        return userService.register(dto) ? Result.success() : Result.fault();
     }
 
     @ApiOperation("获取个人信息")

@@ -19,5 +19,5 @@ public final class Constant {
     public static final String SPACE = " ";
     public static final String NAME = "肥 宅 基 地";
     public static final String BACKSLASH = "/";
-    public static final String RESOURCE_HOST = "https://www.zaixiahuangfeihongqingcijiao.top/resources/";
+    public static final String RESOURCE_HOST = "https://resources-test.dclzs.com/";
 }

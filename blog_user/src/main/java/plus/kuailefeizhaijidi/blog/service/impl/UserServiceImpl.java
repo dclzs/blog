@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import plus.kuailefeizhaijidi.blog.common.Constant;
 import plus.kuailefeizhaijidi.blog.entity.User;
+import plus.kuailefeizhaijidi.blog.entity.dto.UserDto;
 import plus.kuailefeizhaijidi.blog.entity.param.LoginParam;
 import plus.kuailefeizhaijidi.blog.entity.vo.UserVo;
 import plus.kuailefeizhaijidi.blog.mapper.UserMapper;
@@ -69,6 +70,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public UserVo getVo(Long userId) {
         return mapper.map(getById(userId), UserVo.class);
+    }
+
+    @Override
+    public boolean register(UserDto dto) {
+        User map = mapper.map(dto, User.class);
+        map.setStatus(Constant.DISABLE);
+        return add(map) != null;
     }
 
     private User getByEmail(String email){

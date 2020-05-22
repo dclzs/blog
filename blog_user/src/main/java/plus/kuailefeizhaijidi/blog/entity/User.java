@@ -46,7 +46,6 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty(value = "描述")
     private String userDesc;
 
-    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "状态")
     private Integer status;
 

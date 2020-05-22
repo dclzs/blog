@@ -3,8 +3,8 @@ package plus.kuailefeizhaijidi.blog.entity.param;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 /**
  * @author dl
@@ -64,7 +64,7 @@ public class PageParam {
 
     public String getStartDate() {
         if(StringUtils.isNotEmpty(startDate)) {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(Long.valueOf(startDate)));
+            startDate = String.valueOf(Instant.ofEpochMilli(Long.parseLong(startDate)).atZone(ZoneOffset.ofHours(8)).toLocalDate());
         }
         return startDate;
     }
@@ -75,7 +75,7 @@ public class PageParam {
 
     public String getEndDate() {
         if(StringUtils.isNotEmpty(endDate)) {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(Long.valueOf(endDate)));
+            endDate = String.valueOf(Instant.ofEpochMilli(Long.parseLong(endDate)).atZone(ZoneOffset.ofHours(8)).toLocalDate());
         }
         return endDate;
     }
